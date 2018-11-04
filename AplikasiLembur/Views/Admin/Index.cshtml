@@ -1,0 +1,202 @@
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.ModelBinding
+@model AplikasiLembur.ViewModels.AdminViewModel
+@{
+    ViewData["Title"] = "Admin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ul class="nav nav-tabs justify-content-center">
+    <li class="nav-item">
+        <a class="nav-link bg-light active" data-toggle="tab" href="#account" id="account_tab">ACCOUNT</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link bg-light" data-toggle="tab" href="#profile">PROFILE</a>
+    </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="account">
+        <div class="jumbotron">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary border-0 btn-lg" data-toggle="modal" data-target="#addUserDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add User"><i class="fas fa-user-plus fa-2x"></i></button>
+            </div>
+            <br /><hr />
+            <table id="userTable" class="table table-striped table-hover table-condensed" width="100%">
+                <thead>
+                    <tr>
+                        <th>USERNAME</th>
+                        <th ></th>
+                        <th ></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="profile">
+        <div class="jumbotron">
+            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+        </div>
+    </div>
+</div>
+
+@* Dialog Add User *@
+<div class="modal" id="addUserDialog" data-easein="bounceDownIn">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Account" asp-action="Register" id="addUserForm" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="register.Username" class="control-label"></label>
+                        <input asp-for="register.Username" class="form-control" placeholder="Username" autofocus>
+                        <span asp-validation-for="register.Username" class=""></span>
+                    </div>
+                </div>
+                @Html.AntiForgeryToken()
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-name="add">add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Dialog Change Password *@
+<div class="modal" id="changePasswordDialog" data-easein="bounceDownIn">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Account" asp-action="ChangePassword" id="changePass" method="post">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label asp-for="changePasswordModel.OldPassword" class="control-label"></label>
+                        <input asp-for="changePasswordModel.OldPassword" type="password" class="form-control" placeholder="Current Password" autofocus>
+                        <span asp-validation-for="changePasswordModel.OldPassword" id="" class=""></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="changePasswordModel.NewPassword" class="control-label"></label>
+                        <input asp-for="changePasswordModel.NewPassword" type="password" class="form-control" placeholder="New Password">
+                        <span asp-validation-for="changePasswordModel.NewPassword" id="" class=""></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="changePasswordModel.NewPasswordRepeat" class="control-label"></label>
+                        <input asp-for="changePasswordModel.NewPasswordRepeat" type="password" class="form-control" placeholder="New Password Repeat">
+                        <span asp-validation-for="changePasswordModel.NewPasswordRepeat" id="" class=""></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-name="save">save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script>
+    $(document).ready(function () {
+
+        //Tampilkan table user
+        var tables = $("#userTable").DataTable({
+            ajax: {
+                type: 'POST',
+                url: '/account/user',
+                dataSrc: ''
+            },
+            "columnDefs": [{
+                "targets": [1, 2],
+                "orderable": false,
+                "width": "1%"
+            }],
+            "columns": [
+                { "data": "username" },
+                { "data": "resetPassword" },
+                { "data": "delete" }
+            ]
+        });
+
+        ValidateForm("#addUserForm", "/account/adduser","addUser");
+
+        ValidateForm("#changePass", "/account/cp");
+
+        $("body").on('hidden.bs.modal', "#messageDialogInfo[name = 'addUser']", function () {
+            tables.ajax.reload();
+        }); 
+
+        //Reset Password button pressed
+        $("body").on("click",
+            "#resetPassButton",
+            function (e) {
+                e.preventDefault();
+                var data = $(this).attr("data");
+                ShowConfirmationDialog("resetPassword", data, "Reset password??");
+            });
+
+        //Process Reset Password
+        $("body").on("click",
+            "#confirmationDialog[name='resetPassword'] #okButton",
+            function (e) {
+                e.preventDefault();
+                var getId = $("#confirmationDialog[name='resetPassword']").attr("data");
+                $.get("account/resetpass/" + getId,
+                    function (data, status) {
+                        HideModal();
+                        if (status === "success") {
+                            ShowMessageDialog(data["messageType"], data["message"]);
+                        } else {
+                            ShowMessageDialog("", "Ada sesuatu yang salah!");
+                        }
+                    });
+            });
+
+        //Delete button pressed
+        $("body").on("click",
+            "#deleteUserButton",
+            function (e) {
+                e.preventDefault();
+                var data = $(this).attr("data");
+                ShowConfirmationDialog("deleteUser", data, "Delete user??");
+            });
+
+        //Process Delete User
+        $("body").on("click",
+            "#confirmationDialog[name='deleteUser'] #okButton",
+            function (e) {
+                e.preventDefault();
+                var getId = $("#confirmationDialog[name='deleteUser']").attr("data");
+                $.get("account/deluser/" + getId,
+                    function (data, status) {
+                        HideModal();
+                        if (status === "success") {
+                            ShowMessageDialog(data["messageType"], data["message"],"deleteUser");
+                            tables.ajax.reload();
+                        } else {
+                            ShowMessageDialog("", "Something wrong!");
+                        }
+                    });
+            }); 
+    });
+
+    </script>
+}

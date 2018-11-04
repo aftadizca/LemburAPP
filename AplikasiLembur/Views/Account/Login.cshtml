@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model AplikasiLembur.ViewModels.LoginViewModel
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-lg-5 col-md-5">
+        <div class="card mt-5 login">
+            <div class="card-header text-white m-3">
+                <h1 class="text-center font-weight-bold">LOGIN</h1>
+            </div>
+            <div class="card-body">
+
+                <form id="formLogin" method="post">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text px-4 bg-primary-blue"><i class="fas fa-user-circle text-white"></i></span>
+                            </div>
+                            <select asp-for="Username" class="custom-select sandstone" id="inputUsername" aria-describedby="emailHelp" placeholder="Username">
+                                @foreach (var user in UserManager.Users.OrderBy(p => p.UserName))
+                                {
+                                    <option value="@user.UserName">@user.UserName.ToUpper()</option>
+                                }
+                            </select>
+                        </div>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text px-4 bg-primary-blue"><i class="fas fa-key text-white"></i></span>
+                            </div>
+                            <input asp-for="Password" class="form-control sandstone" placeholder="PASSWORD" id="inputPassword">
+                        </div>
+                        <span asp-validation-for="Password" id="fieldPass" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <button id="submitLogin" type="submit" data-name="login" class="btn btn-lg btn-primary btn-block" style="font-size: medium;">LOGIN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+
+@section Scripts
+    {
+    <script>
+        ValidateForm("#formLogin", "/login")
+
+        $(document).ready(function () {
+
+            $("#usernameInput").dropdown({
+            on:'hover'});
+
+        });
+    </script>
+}

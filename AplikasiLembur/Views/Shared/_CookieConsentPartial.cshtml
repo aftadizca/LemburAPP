@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+
+
+    @* Message dialog confirmation *@
+    <div class="modal" id="cookie" name="" data-easein="bounceDownIn">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">CONFIRMATION</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Modal body text goes here.
+                </div>
+                <div class="modal-footer">
+                    <button id="okButton" type="button" class="btn btn-primary">OK</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <nav id="cookieConsent" class="navbar fixed-top" role="alert">
+
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#cookieConsent .navbar-collapse">
+                    <span class="sr-only">Toggle cookie consent banner</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <span class="navbar-brand">hjhjjjjhj</span>
+            </div>
+            <div class="bg-info">
+                <p class="navbar-text">
+                    Use this space to summarize your privacy and cookie use policy.
+                </p>
+                <div class="navbar-right">
+                    <a asp-controller="Home" asp-action="Privacy" class="btn btn-info navbar-btn">Learn More</a>
+                    <button type="button" class="btn btn-default navbar-btn" data-cookie-of-string="@cookieString">Accept</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/js/velocity.min.js"></script>
+    <script src="~/js/velocity.ui.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#cookie").modal('show');
+        });
+
+        (function () {
+            document.querySelector("#cookieConsent button[data-cookie-of-string]").addEventListener("click", function (el) {
+                document.cookie = el.target.dataset.cookieOfString;
+                document.querySelector("#cookieConsent").classList.add("hidden");
+            }, false);
+        })();
+    </script>
+}

@@ -1,0 +1,237 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.d-none {
+    display: none;
+}
+
+.bg-primary-blue {
+    background-color: #325D88;
+    border: 1px solid #325D88;
+}
+
+.login {
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,89,255,0.95);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,89,255,0.95);
+    box-shadow: 0px 0px 2px 0px rgba(0,89,255,0.95);
+    border:1px solid #DFD7CA;
+    border-radius: 5px;
+}
+
+    .login .card-header {
+        background-color: #325D88;
+        border-radius: 5px;
+    }
+
+.field-validation-error {
+    display: block;
+}
+
+    .field-validation-error span {
+        display: block;
+        padding: 5px;
+        background: lightpink;
+        border-radius: 5px;
+    }
+
+    .field-validation-error:before {
+        display: block;
+        font-size: 2em;
+        content: "";
+        width: 0;
+        margin-left: 10px;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid lightpink;
+    }
+    .field-validation-error span:before {
+        display: inline;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f071";
+        padding-right: 3px;
+        padding-left: 5px;
+    }
+
+.input-validation-error {
+    border: 1px solid #d9534f;
+}
+.input-validation-error:focus {
+    border-color: #d9534f;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(217, 83, 79, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(217, 83, 79, 0.25);
+}
+
+.arrow-up {
+    width: 0; 
+    height: 0; 
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  
+    border-bottom: 5px solid black;
+}
+
+.arrow-down {
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+  
+    border-top: 20px solid #f00;
+}
+
+.arrow-right {
+    width: 0; 
+    height: 0; 
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+  
+    border-left: 60px solid green;
+}
+
+.arrow-left {
+    width: 0; 
+    height: 0; 
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+  
+    border-right:10px solid blue; 
+}
+
+.user-setting {
+    font-size: 150%;
+    color : whitesmoke;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.bs-component{
+    position: relative;
+}
+
+/*.dataTables_wrapper th {
+    border: 0px solid #403f3f;
+    border-bottom-width:0px;
+    background-color: #3E3F3A;
+    color: white;
+}
+
+    .table-bordered thead th,
+    .table-bordered thead td {
+        border-bottom-width: 0px;
+    }
+
+.dataTables_wrapper td {
+    border: 0px;
+    font-weight: bold;
+}
+
+.dataTables_wrapper tbody td {
+    border: 0px;
+    font-weight: bold;
+}
+
+.dataTables_wrapper .odd td{
+    background-color: #c6d2de;
+}
+
+.dataTables_wrapper .even td {
+    background-color: #e1efcd;
+}
+
+.dataTables_length label {
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 12px;
+}
+    .dataTables_length label select {
+        font-size: 1em;
+    }*/
+
+.dataTables_wrapper{
+    font-size: 11px;
+    line-height: 22px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.dataTables_wrapper th {
+    background-color: rgba(62, 63, 58, 0.79);
+    color: white;
+    ;
+}
+
+.dataTables_wrapper td {
+    font-weight: bold;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    border-color: #DFD7CA #DFD7CA #F8F5F0;
+}
+
+.fa-pass-reset .fa-key {
+    z-index:10000;
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src: url(../fonts/icomoon.eot?r335mo);
+    src: url(../fonts/icomoon.eot?r335mo#iefix) format('embedded-opentype'), url(../fonts/icomoon.ttf?r335mo) format('truetype'), url(../fonts/icomoon.woff?r335mo) format('woff'), url(../fonts/icomoon.svg?r335mo#icomoon) format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1
+}
+
+.icon-padlock:before {
+    content: "\e900";
+    font-weight: 900;
+}
+
+.table-check.selected {
+    color: #93C54B;
+}
+
+.table-check{
+    color:rgba(223, 215, 202, 0.00);
+}

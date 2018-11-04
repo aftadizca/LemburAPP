@@ -1,0 +1,436 @@
+﻿@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.HomeActive = "active";
+}
+@model AplikasiLembur.ViewModels.HomeViewModel
+@inject UserManager<IdentityUser> UserManager
+@* Dialog Edit Karyawan *@
+<div class="modal" id="editKaryawanDialog" data-easein="bounceDownIn" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-blue text-white">
+                <h5 class="modal-title sandstone">EDIT EMPLOYEE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Home" asp-action="EditKaryawanAsync" id="editKaryawanForm" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="editKaryawanModel.NIK" class="badge badge-primary"></label>
+                        <input asp-for="editKaryawanModel.NIK" class="form-control sandstone" placeholder="NIK" autofocus>
+                        <span asp-validation-for="editKaryawanModel.NIK" class=""></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="editKaryawanModel.NamaKaryawan" class="badge badge-primary"></label>
+                        <input asp-for="editKaryawanModel.NamaKaryawan" class="form-control text-uppercase sandstone" placeholder="NAME">
+                        <span asp-validation-for="editKaryawanModel.NamaKaryawan" class=""></span>
+                    </div>
+                    <input type="hidden" asp-for="editKaryawanModel.id">
+                </div>
+                @Html.AntiForgeryToken()
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-name="save">save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Dialog Edit Task *@
+<div class="modal" id="editTaskDialog" data-easein="bounceDownIn" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-blue text-white">
+                <h1 class="modal-title sandstone">edit Task</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Home" asp-action="EditTaskAsync" id="editTaskForm" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="editTaskModel.Task" class="badge badge-primary"></label>
+                        <input asp-for="editTaskModel.Task" class="form-control sandstone" placeholder="TASK" autofocus>
+                        <span asp-validation-for="editTaskModel.Task" class=""></span>
+                    </div>
+                    <input type="hidden" asp-for="editTaskModel.Id" value="">
+                    <input type="hidden" asp-for="editTaskModel.UserId" value="@UserManager.GetUserId(User)">
+                </div>
+                @Html.AntiForgeryToken()
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-name="add">add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Dialog Add Karyawan *@
+<div class="modal" id="addKaryawanDialog" data-easein="bounceDownIn" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-blue text-white">
+                <h1 class="modal-title sandstone">Add Employee</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Home" asp-action="AddKaryawanAsync" id="addKaryawanForm" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="karyawanModel.NIK" class="badge badge-primary"></label>
+                        <input asp-for="karyawanModel.NIK" class="form-control sandstone" placeholder="NIK" autofocus>
+                        <span asp-validation-for="karyawanModel.NIK" class=""></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="karyawanModel.NamaKaryawan" class="badge badge-primary"></label>
+                        <input asp-for="karyawanModel.NamaKaryawan" class="form-control text-uppercase sandstone" placeholder="NAME">
+                        <span asp-validation-for="karyawanModel.NamaKaryawan" class=""></span>
+                    </div>
+                    <input type="hidden" asp-for="karyawanModel.UserId" value="@UserManager.GetUserId(User)">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input sandstone" id="modalShowCheckKaryawan" unchecked>
+                        <label class="custom-control-label sandstone" for="modalShowCheckKaryawan">Add another employee?</label>
+                    </div>
+                </div>
+                @Html.AntiForgeryToken()
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-name="add">add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Dialog Add Task *@
+<div class="modal" id="addTaskDialog" data-easein="bounceDownIn" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-blue text-white">
+                <h1 class="modal-title sandstone">Add Task</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Home" asp-action="AddTaskAsync" id="addTaskForm" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label asp-for="taskModel.Task" class="badge badge-primary"></label>
+                        <input asp-for="taskModel.Task" class="form-control sandstone" placeholder="TASK" autofocus>
+                        <span asp-validation-for="taskModel.Task" class=""></span>
+                    </div>
+                    <input type="hidden" asp-for="taskModel.UserId" value="@UserManager.GetUserId(User)">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input sandstone " id="modalShowCheckTask" unchecked>
+                        <label class="custom-control-label sandstone" for="modalShowCheckTask">Add another task?</label>
+                    </div>
+                </div>
+                @Html.AntiForgeryToken()
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-name="add">add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@* Dialog Change Password *@
+<div class="modal" id="changePasswordDialog" data-easein="bounceDownIn" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-blue text-white">
+                <h5 class="modal-title sandstone">CHANGE PASSWORD</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form asp-controller="Account" asp-action="ChangePassword" id="changePass" method="post">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label asp-for="changePasswordModel.OldPassword" class="badge badge-primary"></label>
+                        <input asp-for="changePasswordModel.OldPassword" type="password" class="form-control sandstone" placeholder="Current Password" autofocus">
+                        <span asp-validation-for="changePasswordModel.OldPassword" id="" class=""></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="changePasswordModel.NewPassword" class="badge badge-primary"></label>
+                        <input asp-for="changePasswordModel.NewPassword" type="password" class="form-control sandstone" placeholder="New Password">
+                        <span asp-validation-for="changePasswordModel.NewPassword" id="" class=""></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="changePasswordModel.NewPasswordRepeat" class="badge badge-primary"></label>
+                        <input asp-for="changePasswordModel.NewPasswordRepeat" type="password" class="form-control sandstone" placeholder="New Password Repeat">
+                        <span asp-validation-for="changePasswordModel.NewPasswordRepeat" id="" class=""></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" data-name="submit">SUBMIT</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<ul class="nav nav-tabs justify-content-center" id="myTabs">
+    <li class="nav-item">
+        <a class="nav-link bg-light" data-toggle="tab" href="#employee" id="employee_tab">EMPLOYEE</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link bg-light" data-toggle="tab" href="#task" id="task_tab">TASK</a>
+    </li>
+</ul>
+<div id="myTabContent" class="tab-content">
+
+    <div class="tab-pane fade" id="employee">
+        <div class="jumbotron">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary border-0" data-toggle="modal" data-target="#addKaryawanDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add Employee"><i class="fas fa-user-plus"></i></button>
+            </div>
+            <hr />
+            <table id="karyawanTable" class="table table-hover table-striped table-primary" width="100%">
+                <thead>
+                    <tr>
+                        <th scope="col">NIK</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="task">
+        <div class="jumbotron">
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add task" id="addTask"><i class="fas fa-plus"></i></button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="edit task" id="editTask" disabled><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-tooltip="show" data-placement="auto" title="" data-original-title="delete task" id="deleteTask" disabled><i class="fas fa-trash"></i></button>
+            </div>
+            <hr />
+            <table id="taskTable" class="table table-hover table-striped table-primary" width="100%">
+                <thead>
+                    <tr>
+                        <th scope="col" style="width:1%"></th>
+                        <th scope="col">TASK</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+
+            ValidateForm("#changePass", "/account/cp");
+            ValidateForm("#addKaryawanForm", "/home/add/employee", "addEmployee"); 
+            ValidateForm("#editKaryawanForm", "/home/edit/employee", "editEmployee");
+            ValidateForm("#addTaskForm", "/home/add/task", "addTask");
+            ValidateForm("#editTaskForm", "/home/edit/task", "editTask");
+
+            //Load table Task
+            var taskTables = $("#taskTable").DataTable({
+                ajax: {
+                    type: 'POST',
+                    url: '/home/list/task',
+                    dataSrc: 'result'
+                },
+                order: []
+                ,
+                columns: [
+                    {
+                        defaultContent: '<i class="fa fa-check fa-2x table-check"></i>',
+                        width: '1%',
+                        orderable: false,
+                        className: "align-center"
+                    },
+                    { data: "task" }
+                ],
+                select: {
+                    style: 'os'
+                }
+            });
+
+            //////////////////////TABLE TASK PROCESS///////////////////////////
+            //selected data
+            var taskData;
+            //select event
+            taskTables.on('select', function (e, dt, type, indexes) {
+                taskData = taskTables.rows('.selected').data();
+                $(".dataTable i").removeClass("selected");
+                $(".dataTable .selected i").toggleClass("selected");
+                (taskData.length > 0) ? $("#deleteTask").prop("disabled", false) : $("#deleteTask").prop("disabled", true);
+                (taskData.length === 1) ? $("#editTask").prop("disabled", false) : $("#editTask").prop("disabled", true);
+            });
+            //deselect event
+            taskTables.on('deselect', function (e, dt, type, indexes) {
+                taskData = taskTables.rows(['.selected']).data();
+                $(".dataTable i").removeClass("selected");
+                $(".dataTable .selected i").toggleClass("selected");
+                (taskData.length > 0) ? $("#deleteTask").prop("disabled", false) : $("#deleteTask").prop("disabled", true);
+                (taskData.length === 1) ? $("#editTask").prop("disabled", false) : $("#editTask").prop("disabled", true);
+            });
+            //draw event
+            taskTables.on('draw.dt', function () {
+                $("#deleteTask").prop("disabled", true);
+                $("#editTask").prop("disabled", true);
+                console.log("Task Table Drawed!!"); 
+            });
+            //delete button click
+            $("#deleteTask").click(function () {
+                ShowConfirmationDialog("deleteTask", "", "Delete task ??");
+            });
+            //process delete task
+            $("body").on("click", "[confirm='deleteTask'] #okButton", function (e) {
+                var datas = JSON.stringify(taskData.pluck("id").toArray());
+                $.ajax({
+                    url: "/home/delete/task",
+                    method: "POST",
+                    contentType: "application/json",
+                    data: datas,
+                    beforeSend: function () {
+
+                    },
+                    success: function (result, status) {
+                        HideModal();
+                        if (status === "success") {
+                            ShowMessageDialog(result["messageType"], result["message"]);
+                            taskTables.ajax.reload();
+                        } else {
+                            ShowMessageDialog("", "ada sesuatu yang salah!");
+                        }
+                    }
+                });
+            });
+            //Edit Task Load
+            $('#editTaskDialog').on('show.bs.modal', function () {
+                $('#editTaskModel_Id').val(taskData.pluck('id').toArray());
+                $('#editTaskModel_Task').val(taskData.pluck('task').toArray());
+            });
+            //Refresh table after add task
+            $("body").on('hidden.bs.modal', "[name = 'addTask']", function () {
+                taskTables.ajax.reload();
+                if ($("#modalShowCheckTask").is(":checked")) {
+                    $("#addTaskDialog").modal('show');
+                }
+            });
+            //Refresh table after edit task
+            $("body").on('hidden.bs.modal', "[name = 'editTask']", function () {
+                taskTables.ajax.reload();
+            });
+
+
+            //////////////////////////////////////////////////////////////////////
+
+            //Load table Karyawan
+            var tables = $("#karyawanTable").DataTable({
+                ajax: {
+                    type: 'POST',
+                    url: '/home/list/employee',
+                    dataSrc: 'result'
+                },
+                "columnDefs": [
+                    {
+                        "targets": 2,
+                        "orderable": false,
+                        "width": "1%",
+                        "data": "nik",
+                        "defaultContent": '<div class="btn-group" role="group" aria-label="Basic example"><button id="edit" type="button" class="btn btn-outline-primary border-0" data-tooltip="show" data-placement="auto" title="" data-original-title="Edit"><i class="fas fa-user-edit"></i></button><button type="button" id="delete" class="btn btn-outline-danger border-0" data-tooltip="show" data-placement="auto" title="" data-original-title="Delete"><i class="fas fa-user-minus"></i></button></div>'
+                    },
+                    {
+                        "targets": 0,
+                        "width": "1%"
+                    }
+                ],
+                "columns": [
+                    { "data": "nik" },
+                    { "data": "namaKaryawan" },
+                    { "data": null }
+                ]
+            });
+
+            //save opened tab when refresh
+            var activeTabs = Cookies.get('tab_id');
+            if (activeTabs) {
+                $("#" + activeTabs).tab("show");
+                $('.dataTable').DataTable().columns.adjust().draw();
+            } else {
+                $("#myTabs li:first-child a").tab("show");
+                $('.dataTable').DataTable().columns.adjust().draw();
+            }  
+            //refresh column width of table
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $('.dataTable').DataTable().columns.adjust().draw();
+                Cookies.set('tab_id', e.target.id);
+            });
+
+
+
+            //Action Button in table Karyawan
+            $("#karyawanTable tbody").on("click", "button.btn", function () {
+                var data = tables.row($(this).parents("tr")).data();
+
+                if ($(this).is("#edit")) {
+                    $("#editKaryawanDialog #editKaryawanModel_NIK").val(data["nik"]);
+                    $("#editKaryawanDialog #editKaryawanModel_NamaKaryawan").val(data["namaKaryawan"]);
+                    $("#editKaryawanDialog #editKaryawanModel_id").val(data["id"]);
+                    $("#editKaryawanDialog").modal("show");
+                } else {
+                    ShowConfirmationDialog("deleteEmployee", data["id"], "Delete employee ??");
+                }
+            });
+
+            //Process Delete Employee
+            $("body").on("click",
+                "[confirm='deleteEmployee'] #okButton",
+                function (e) {
+                    e.preventDefault();
+                    var getId = $("[confirm='deleteEmployee']").attr("data");
+                    $.get("home/delete/employee/" + getId,
+                        function (data, status) {
+                            HideModal();
+                            if (status === "success") {
+                                ShowMessageDialog(data["messageType"], data["message"]);
+                                tables.ajax.reload();
+                            } else {
+                                ShowMessageDialog("", "Ada sesuatu yang salah!");
+                            }
+                        });
+                });
+
+            //Refresh table after add karyawan
+            $("body").on('hidden.bs.modal', "#messageDialogInfo[name = 'addEmployee']", function () {
+                tables.ajax.reload();
+                if ($("#modalShowCheckKaryawan").is(":checked")) {
+                    $("#addKaryawanDialog").modal('show');
+                }
+            });
+            //refresh table after edit karyawan
+            $("body").on('hidden.bs.modal', "#messageDialogInfo[name = 'editEmployee']", function () {
+                tables.ajax.reload();
+            });
+            
+
+        });
+
+    </script>
+}
