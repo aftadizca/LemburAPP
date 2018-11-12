@@ -17,5 +17,7 @@ namespace AplikasiLembur.ViewModels
         public TaskModel taskModel { get; set; }
 
         public TaskModel editTaskModel { get; set; }
+
+        public LemburModel lemburModel { get; set; }
     }                                                                       
 }

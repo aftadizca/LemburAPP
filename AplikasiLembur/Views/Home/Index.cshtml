@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using System.Globalization
+@using Newtonsoft.Json
 @{
     ViewData["Title"] = "Home Page";
     ViewBag.HomeActive = "active";
@@ -28,7 +30,7 @@
                         <input asp-for="editKaryawanModel.NamaKaryawan" class="form-control text-uppercase sandstone" placeholder="NAME">
                         <span asp-validation-for="editKaryawanModel.NamaKaryawan" class=""></span>
                     </div>
-                    <input type="hidden" asp-for="editKaryawanModel.id">
+                    <input type="hidden" asp-for="editKaryawanModel.Id">
                 </div>
                 @Html.AntiForgeryToken()
                 <div class="modal-footer">
@@ -184,69 +186,258 @@
 </div>
 
 
+<div class="acDepartemen" data-departemens='["Produksi","Teknik","QAQC"]'></div>
 
-<ul class="nav nav-tabs justify-content-center" id="myTabs">
-    <li class="nav-item">
-        <a class="nav-link bg-light" data-toggle="tab" href="#employee" id="employee_tab">EMPLOYEE</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link bg-light" data-toggle="tab" href="#task" id="task_tab">TASK</a>
-    </li>
-</ul>
-<div id="myTabContent" class="tab-content">
 
-    <div class="tab-pane fade" id="employee">
-        <div class="jumbotron">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary border-0" data-toggle="modal" data-target="#addKaryawanDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add Employee"><i class="fas fa-user-plus"></i></button>
+
+
+
+
+<div class="body-content">
+    <div class="row mt-3">
+        <div class="col-sm-3">
+
+            <div id="leftMenu" class="list-group sandstone text-normal mb-3 mb-md-0">
+                <div class="list-group-item list-group-item-heading bg-primary text-white"><i class="fa fa-bars"></i>&nbsp;&nbsp;MENU</div>
+                <a class="list-group-item list-group-item-action" data-toggle="tab" href="#employee" id="employee_tab">Employee</a>
+                <a class="list-group-item list-group-item-action" data-toggle="tab" href="#task" id="task_tab">Task</a>
+                <a class="list-group-item list-group-item-action" data-toggle="tab" href="#overtime" id="overtime_tab">overtime</a>
             </div>
-            <hr />
-            <table id="karyawanTable" class="table table-hover table-striped table-primary" width="100%">
-                <thead>
-                    <tr>
-                        <th scope="col">NIK</th>
-                        <th scope="col">NAME</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+
         </div>
-    </div>
 
-    <div class="tab-pane fade" id="task">
-        <div class="jumbotron">
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add task" id="addTask"><i class="fas fa-plus"></i></button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="edit task" id="editTask" disabled><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-tooltip="show" data-placement="auto" title="" data-original-title="delete task" id="deleteTask" disabled><i class="fas fa-trash"></i></button>
+
+        <div class="col-sm">
+
+            <div id="myTabContent" class="tab-content">
+
+                <div class="tab-pane fade" id="employee">
+                    <div class="card border-primary">
+                        <div class="card-header">EMPLOYEE</div>
+                        <div class="card-body">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-primary border-0" data-toggle="modal" data-target="#addKaryawanDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add Employee"><i class="fas fa-user-plus"></i></button>
+                            </div>
+                            <hr />
+                            <table id="karyawanTable" class="table table-hover table-striped table-primary" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">NIK</th>
+                                        <th scope="col">NAME</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="task">
+                    <div class="card border-primary">
+                        <div class="card-header">EMPLOYEE</div>
+                        <div class="card-body">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add task" id="addTask"><i class="fas fa-plus"></i></button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="edit task" id="editTask" disabled><i class="fas fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-tooltip="show" data-placement="auto" title="" data-original-title="delete task" id="deleteTask" disabled><i class="fas fa-trash"></i></button>
+                            </div>
+                            <hr />
+                            <table id="taskTable" class="table table-hover table-striped table-primary" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width:1%"></th>
+                                        <th scope="col">TASK</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="overtime">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">OVERTIME</div>
+                        <div class="card-body">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item ">
+                                    <a class="nav-link active" data-toggle="tab" href="#test">Create Overtime</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#test2">Link</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="tab-pane container fade active show" id="test">
+                                    <form action="/" method="post">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label asp-for="lemburModel.Departement" class="badge badge-primary">DEPARTEMENT</label>
+                                                    <input class="form-control" asp-for="lemburModel.Departement" />
+                                                    <span asp-validation-for="lemburModel.Departement" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label asp-for="lemburModel.Division" class="badge badge-primary">DIVISION</label>
+                                                    <input class="form-control" asp-for="lemburModel.Division" />
+                                                    <span asp-validation-for="lemburModel.Division" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label asp-for="lemburModel.Employee" class="badge badge-primary">EMPLOYEE</label>
+                                                    <input class="form-control" asp-for="lemburModel.Employee" />
+                                                    <span asp-validation-for="lemburModel.Employee" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="badge badge-primary">NOMOR</label>
+                                                    <input class="form-control" name="exclude" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="badge badge-primary">DAY</label>
+                                                    <input class="form-control day" name="exclude" readonly />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label asp-for="lemburModel.CreatedDate" class="badge badge-primary">DATE</label>
+                                                    <input class="form-control" asp-for="lemburModel.CreatedDate" value="@DateTime.Now.Date.ToString("yyyy-MM-dd")" />
+                                                    <span asp-validation-for="lemburModel.CreatedDate" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label asp-for="lemburModel.Start" class="badge badge-primary">START</label>
+                                                    <input class="form-control" asp-for="lemburModel.Start" value="00:00" />
+                                                    <span asp-validation-for="lemburModel.Start" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label asp-for="lemburModel.End" class="badge badge-primary">END</label>
+                                                    <input class="form-control" asp-for="lemburModel.End" value="00:00" />
+                                                    <span asp-validation-for="lemburModel.End" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label asp-for="lemburModel.Plan" class="badge badge-primary">PLAN</label>
+                                                    <input class="form-control" asp-for="lemburModel.Plan" readonly />
+                                                    <span asp-validation-for="lemburModel.Plan" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <table id="karyawanTable2" class="table table-hover table-striped table-primary" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="check-all" scope="col"><i class="fa fa-check fa-2x table-check"></i></th>
+                                                            <th scope="col">NIK</th>
+                                                            <th scope="col">NAME</th>
+                                                            <th scope="col">TASK</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                <div class="tab-pane container fade" id="test2">
+                                    <br /><wbr />
+                                    ssdsdsdsdsdsd
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
-            <hr />
-            <table id="taskTable" class="table table-hover table-striped table-primary" width="100%">
-                <thead>
-                    <tr>
-                        <th scope="col" style="width:1%"></th>
-                        <th scope="col">TASK</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+
+
         </div>
     </div>
 </div>
 
 
+
 @section Scripts
     {
     <script>
-        $(document).ready(function () {
+        $(document).ready(function () { 
+            $(window).on("beforeunload", function (e) {
+                return e.originalEvent.returnValue = "Your message here";
+            });
 
             ValidateForm("#changePass", "/account/cp");
-            ValidateForm("#addKaryawanForm", "/home/add/employee", "addEmployee"); 
+            ValidateForm("#addKaryawanForm", "/home/add/employee", "addEmployee");
             ValidateForm("#editKaryawanForm", "/home/edit/employee", "editEmployee");
             ValidateForm("#addTaskForm", "/home/add/task", "addTask");
             ValidateForm("#editTaskForm", "/home/edit/task", "editTask");
 
+
+            ////////////////TABLE KARYWAN IN LEMBUR FORM/////////////
+            var karyawanTable2 = $("#karyawanTable2").DataTable({
+                ajax: {
+                    type: 'POST',
+                    url: '/home/list/employee',
+                    dataSrc: 'result'
+                },
+                order: [],
+                "searching": false,
+                "scrollY": "300px",
+                "paging": false,
+                "info": false,
+                "columns": [
+                    {
+                        "data": null,
+                        defaultContent: '<i class="fa fa-check fa-2x table-check"></i>',
+                        orderable: false,
+                        "width": "1%"
+                    },
+                    {
+                        "data": "nik",
+                        "width": "1%"
+                    },
+                    { "data": "namaKaryawan" },
+                    {
+                        "data": null,
+                        defaultContent:'<div class="form-group"><input class="form-control task" type="text" disabled/></div>'
+                    }
+                ]
+            });
+
+            $("#karyawanTable2_wrapper th.check-all").on("click", function () {
+                if ($(this).find("i").hasClass("selected")) { 
+                    $("#karyawanTable2_wrapper i").removeClass("selected");
+                    $("#karyawanTable2_wrapper tr").removeClass("selected");
+                    $("#karyawanTable2_wrapper input").prop("disabled", true);
+                } else { 
+                    $("#karyawanTable2_wrapper i").addClass("selected");
+                    $("#karyawanTable2_wrapper tr").addClass("selected");
+                    $("#karyawanTable2_wrapper input").prop("disabled", false);
+                }
+                
+            });
+            $("body").on("click","#karyawanTable2_wrapper tbody tr", function () {
+                $(this).toggleClass("selected");
+                $(this).find("i").toggleClass("selected");
+                $(this).find("input").prop("disabled", function (i, v) { return !v; });
+            });
+            $("body").on("click", "#karyawanTable2_wrapper tbody input", function (e) {
+                e.stopPropagation();
+            });
+            //////////////////////////////////////////////////////////////////////////
+            
+
+            //////////////////////TABLE TASK PROCESS///////////////////////////
             //Load table Task
             var taskTables = $("#taskTable").DataTable({
                 ajax: {
@@ -269,10 +460,8 @@
                     style: 'os'
                 }
             });
-
-            //////////////////////TABLE TASK PROCESS///////////////////////////
             //selected data
-            var taskData;
+            var taskData; 
             //select event
             taskTables.on('select', function (e, dt, type, indexes) {
                 taskData = taskTables.rows('.selected').data();
@@ -293,7 +482,7 @@
             taskTables.on('draw.dt', function () {
                 $("#deleteTask").prop("disabled", true);
                 $("#editTask").prop("disabled", true);
-                console.log("Task Table Drawed!!"); 
+                console.log("Task Table Drawed!!");
             });
             //delete button click
             $("#deleteTask").click(function () {
@@ -337,9 +526,21 @@
             $("body").on('hidden.bs.modal', "[name = 'editTask']", function () {
                 taskTables.ajax.reload();
             });
+            var taskList;
+            var taskList2 = [];
 
-
-            //////////////////////////////////////////////////////////////////////
+            taskTables.on("draw.dt", function () {
+                $(".acTask").remove();
+                taskList = taskTables.data();
+                if (taskList2.length !== taskList.length) { 
+                    for (var i = 0; i < taskList.length; i++) {
+                        $("body").prepend('<div class="acTask" data-task="' + taskList[i]["task"] +'" data-task-id="'+taskList[i]["id"]+'"></div>');
+                    } 
+                }
+                //console.log(JSON.stringify($(".acTask").attr("data-task")));
+            });
+            
+            ////////////////////////END TASK TABLE//////////////////////////////////////////////
 
             //Load table Karyawan
             var tables = $("#karyawanTable").DataTable({
@@ -367,23 +568,6 @@
                     { "data": null }
                 ]
             });
-
-            //save opened tab when refresh
-            var activeTabs = Cookies.get('tab_id');
-            if (activeTabs) {
-                $("#" + activeTabs).tab("show");
-                $('.dataTable').DataTable().columns.adjust().draw();
-            } else {
-                $("#myTabs li:first-child a").tab("show");
-                $('.dataTable').DataTable().columns.adjust().draw();
-            }  
-            //refresh column width of table
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                $('.dataTable').DataTable().columns.adjust().draw();
-                Cookies.set('tab_id', e.target.id);
-            });
-
-
 
             //Action Button in table Karyawan
             $("#karyawanTable tbody").on("click", "button.btn", function () {
@@ -428,7 +612,67 @@
             $("body").on('hidden.bs.modal', "#messageDialogInfo[name = 'editEmployee']", function () {
                 tables.ajax.reload();
             });
+
+            ///////ANIMATION & TAB BEHAVIOUR///////////////
+            //save opened tab when refresh
+            var activeTabs = Cookies.get('tab_id');
+            if (activeTabs) {
+                $("#" + activeTabs).tab("show");
+            } else {
+                $("#leftMenu a:first-of-type").tab("show");
+            }
+            //refresh column width of table
+            $('#leftMenu a').on('shown.bs.tab', function (e) {
+                Cookies.set('tab_id', e.target.id);
+            });
+            //animasi load tab
+            $('#leftMenu a').on("show.bs.tab", function () {
+                $("#myTabContent>.tab-pane").velocity("slideUp", { duration: 300 });
+                $("#myTabContent " + $(this).attr("href")).velocity("slideDown", {
+                    duration: 500, complete: function () {
+                        $('.dataTable').DataTable().columns.adjust().draw();
+                    }
+                });
+            });
+            //////END ANIMATION & TAB BEHAVIOUR//////////
+
+
+
+            //////////////////AUTO COMPLETE/////////////////////////
+            var acDepartements = JSON.parse($(".acDepartemen").attr("data-departemens"));
+            console.log(acDepartements);
+            $("#lemburModel_Departement").autocomplete({
+                source: acDepartements,
+                minLength: 0,
+                delay: 100
+            });
             
+            //$("#lemburModel_Division").autocomplete({
+                
+            //});
+
+            //get Day
+            var date = new Date($("#lemburModel_CreatedDate").val());
+            $(".day").val(getDayName(date.getDay()));
+            $("#lemburModel_CreatedDate").on("change", function () {
+                date = new Date($("#lemburModel_CreatedDate").val());
+                $(".day").val(getDayName(date.getDay()));
+            });
+
+            //get Plan
+            var Start = new Date("1/1/1970 " + $("#lemburModel_Start").val());
+            var End = new Date("1/1/1970 " + $("#lemburModel_End").val());
+            var Plan = End.getHours() - Start.getHours();
+
+            $("#lemburModel_Plan").val(Plan-1); 
+
+            $("#lemburModel_Start,#lemburModel_End").on("change", function () {
+                Start = new Date("1/1/1970 " + $("#lemburModel_Start").val());
+                End = new Date("1/1/1970 " + $("#lemburModel_End").val()); 
+                Plan = End.getHours() - Start.getHours();
+                $("#lemburModel_Plan").val(Plan-1); 
+            });
+
 
         });
 

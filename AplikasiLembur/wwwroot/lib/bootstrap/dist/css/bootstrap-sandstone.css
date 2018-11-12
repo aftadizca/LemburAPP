@@ -3209,7 +3209,7 @@ input[type="button"].btn-block {
   margin-left: 0;
 }
 
-.dropdown-menu {
+.dropdown-menu,.ui-menu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -3340,24 +3340,24 @@ input[type="button"].btn-block {
   border-top: 1px solid #F8F5F0;
 }
 
-.dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 0.25rem 1.5rem;
-  clear: both;
-  font-weight: 400;
-  color: #8E8C84;
-  text-align: inherit;
-  white-space: nowrap;
-  background-color: transparent;
-  border: 0;
+.dropdown-item, .ui-menu-item {
+    display: block;
+    width: 100%;
+    padding: 0.25rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #8E8C84;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
 }
 
-.dropdown-item:hover, .dropdown-item:focus {
-  color: #8E8C84;
-  text-decoration: none;
-  background-color: #F8F5F0;
-}
+    .dropdown-item:hover, .dropdown-item:focus, .ui-menu-item:hover, .ui-menu-item:focus {
+        color: #8E8C84;
+        text-decoration: none;
+        background-color: #F8F5F0;
+    }
 
 .dropdown-item.active, .dropdown-item:active {
   color: #8E8C84;

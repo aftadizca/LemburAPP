@@ -30,11 +30,11 @@ namespace AplikasiLembur.Controllers
         public IActionResult Index(HomeViewModel homeViewModel)
         {
             if (User.IsInRole("admin"))
-            {
+            {    
                 return RedirectToAction("Index", "Admin");
             }
             else
-            {
+            {                      
                 return View(homeViewModel);
             }
 
@@ -73,12 +73,19 @@ namespace AplikasiLembur.Controllers
         public async Task<IActionResult> AddTaskAsync(TaskModel taskModel)
         {   
             if (ModelState.IsValid)
-            {  
-               
-                var result = await _taskRepository.AddTaskAsync(taskModel);
-                if (result.Succeeded)
+            {
+                var countTask = await _taskRepository.SearchTaskAsync(taskModel.Task);
+                if (countTask > 0)
                 {
-                    return Json(new { type = "msg", messageType = "information", message = "Task successfully added!!" });
+                    return Json(new { type = "msg", messageType = "error", message = "Task already exists!!" });
+                }
+                else
+                {
+                    var result = await _taskRepository.AddTaskAsync(taskModel);
+                    if (result.Succeeded)
+                    {
+                        return Json(new { type = "msg", messageType = "information", message = "Task successfully added!!" });
+                    }
                 } 
             }
             return Json(new { type = "msg", messageType = "error", message = "Something wrong !!" });
@@ -161,7 +168,7 @@ namespace AplikasiLembur.Controllers
         [Route("/home/list/employee")]
         [Authorize]
         public IActionResult GetKaryawanList()
-        {
+        {   
             return Json(_karyawanRepository.GetAllKaryawanByUserId(_userManager.GetUserId(User).ToString()).ToList());
         }
 

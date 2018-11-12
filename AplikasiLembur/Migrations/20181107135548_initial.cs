@@ -154,10 +154,10 @@ namespace AplikasiLembur.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "karyawans",
+                name: "Karyawans",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     NIK = table.Column<int>(nullable: false),
                     NamaKaryawan = table.Column<string>(nullable: false),
@@ -165,11 +165,80 @@ namespace AplikasiLembur.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_karyawans", x => x.id);
+                    table.PrimaryKey("PK_Karyawans", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_karyawans_AspNetUsers_UserId",
+                        name: "FK_Karyawans_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lemburs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Departement = table.Column<string>(nullable: true),
+                    Division = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lemburs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lemburs_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Task = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LemburDetails",
+                columns: table => new
+                {
+                    Start = table.Column<DateTime>(nullable: false),
+                    End = table.Column<DateTime>(nullable: false),
+                    Plan = table.Column<int>(nullable: false),
+                    LemburId = table.Column<int>(nullable: false),
+                    KaryawanId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LemburDetails", x => new { x.LemburId, x.KaryawanId });
+                    table.ForeignKey(
+                        name: "FK_LemburDetails_Karyawans_KaryawanId",
+                        column: x => x.KaryawanId,
+                        principalTable: "Karyawans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LemburDetails_Lemburs_LemburId",
+                        column: x => x.LemburId,
+                        principalTable: "Lemburs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -214,8 +283,23 @@ namespace AplikasiLembur.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_karyawans_UserId",
-                table: "karyawans",
+                name: "IX_Karyawans_UserId",
+                table: "Karyawans",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LemburDetails_KaryawanId",
+                table: "LemburDetails",
+                column: "KaryawanId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lemburs_UserId",
+                table: "Lemburs",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tasks_UserId",
+                table: "Tasks",
                 column: "UserId");
         }
 
@@ -237,10 +321,19 @@ namespace AplikasiLembur.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "karyawans");
+                name: "LemburDetails");
+
+            migrationBuilder.DropTable(
+                name: "Tasks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Karyawans");
+
+            migrationBuilder.DropTable(
+                name: "Lemburs");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

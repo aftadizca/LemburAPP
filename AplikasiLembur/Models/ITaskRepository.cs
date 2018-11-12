@@ -11,6 +11,10 @@ namespace AplikasiLembur.Models
 
         IAsyncEnumerable<TaskModel> GetAllTaskByUserId(string id);
 
+        Task<String> GetTaskById(int id);
+
+        Task<int> SearchTaskAsync(string task);
+
         Task<TResult> AddTaskAsync(TaskModel taskModel);
 
         Task<TResult> DelTaskAsync(int[] id);

@@ -67,5 +67,17 @@ namespace AplikasiLembur.Models
             }
             return TResult.Fail;
         }
+
+        public async Task<string> GetTaskById(int id)
+        {
+            var task = await _appDbContext.Tasks.FirstOrDefaultAsync(p => p.Id == id);
+            return task.Task;
+            
+        }
+
+        public async Task<int> SearchTaskAsync(string task)
+        {
+            return await _appDbContext.Tasks.CountAsync(p => p.Task == task);  
+        }
     }
 }

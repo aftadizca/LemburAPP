@@ -233,5 +233,17 @@ body {
 }
 
 .table-check{
-    color:rgba(223, 215, 202, 0.00);
+    color:rgb(220, 220, 220);
 }
+
+.nav-pills .nav-link.active {
+    color: #fff;
+    background-color: #244463;
+    border-color: #213d59;
+}
+
+.text-normal {
+    font-size: 0.875rem;
+    font-weight: normal;
+}
+

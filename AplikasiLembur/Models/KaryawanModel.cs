@@ -12,9 +12,8 @@ namespace AplikasiLembur.Models
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        [Required]
         [DisplayName("NIK")]
         public int NIK { get; set; }
         

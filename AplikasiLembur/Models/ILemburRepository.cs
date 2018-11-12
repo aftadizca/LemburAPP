@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace AplikasiLembur.Models
 {
-    public class TaskList
+    public interface ILemburRepository
     {
-        public TaskModel[] taskList { get; set; }
+        Task<TResult> AddLembur(LemburModel lemburModel);
+
+        Task<TResult> GetLastId();
     }
 }

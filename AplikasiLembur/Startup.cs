@@ -63,7 +63,7 @@ namespace AplikasiLembur
 
             services.AddTransient<IKaryawanRepository, KaryawanRepository>();
             services.AddTransient<ITaskRepository, TaskRepository>();
-
+            services.AddTransient<ILemburRepository, LemburRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

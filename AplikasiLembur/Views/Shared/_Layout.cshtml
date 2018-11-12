@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-sandstone.css" />
         <link rel="stylesheet" href="~/css/awesome.css" />
         <link rel="stylesheet" href="~/css/datatables.css" />
+        <link rel="stylesheet" href="~/css/jquery-ui.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
 
@@ -22,7 +23,7 @@
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
 </head>
-<body>
+<body class="bg-dark">
 
     @* Message Dialog Information *@
     <div class="modal" id="messageDialogInfo" data-easein="pulse" name="" data-backdrop="static" data-keyboard="false" role="dialog">
@@ -101,43 +102,37 @@
         </div>
     </div>
 
-    <div class="container body-content mt-5">
-        @RenderBody()
-        <footer>
-            <div class="card-footer">
-                <p>&copy; 2018 - by ADW</p>
-            </div>
-        </footer>
-    </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-        @*<script src="~/js/jquery.dataTables.min.js"></script>
-        <script src="~/js/dataTables.bootstrap4.min.js"></script>*@
-        <script src="~/js/datatables.js"></script>
-        <script src="~/js/velocity.min.js"></script>
-        <script src="~/js/velocity.ui.min.js"></script>
-        <script src="~/js/js.cookie.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-        <script src="~/js/jquery.dataTables.min.js"></script>
-        <script src="~/js/dataTables.bootstrap4.min.js"></script>
-        <script src="~/js/velocity.min.js"></script>
-        <script src="~/js/velocity.ui.min.js"></script>
-        <script src="~/js/js.cookie.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
+    @RenderBody() 
 
-    @RenderSection("Scripts", required: false)
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+            <script src="~/js/jquery-ui.js"></script>
+            <script src="~/js/datatables.js"></script>
+            <script src="~/js/velocity.min.js"></script>
+            <script src="~/js/velocity.ui.min.js"></script>
+            <script src="~/js/js.cookie.js"></script>
+            <script src="~/js/alertify.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+            <script src="~/js/jquery.dataTables.min.js"></script>
+            <script src="~/js/dataTables.bootstrap4.min.js"></script>
+            <script src="~/js/velocity.min.js"></script>
+            <script src="~/js/velocity.ui.min.js"></script>
+            <script src="~/js/js.cookie.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+
+        @RenderSection("Scripts", required: false)
 </body>
 </html>

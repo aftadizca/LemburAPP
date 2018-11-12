@@ -11,6 +11,10 @@
     <Compile Remove="Migrations\20181014164314_AddIdentity.Designer.cs" />
     <Compile Remove="Migrations\20181031124938_addTableTask.cs" />
     <Compile Remove="Migrations\20181031124938_addTableTask.Designer.cs" />
+    <Compile Remove="Migrations\20181107133342_LemburDetailsUpdate3.cs" />
+    <Compile Remove="Migrations\20181107133342_LemburDetailsUpdate3.Designer.cs" />
+    <Compile Remove="Migrations\20181107133855_LemburDetailsUpdate3.cs" />
+    <Compile Remove="Migrations\20181107133855_LemburDetailsUpdate3.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

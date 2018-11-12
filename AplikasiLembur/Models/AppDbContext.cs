@@ -14,8 +14,15 @@ namespace AplikasiLembur.Models
         public DbSet<KaryawanModel> Karyawans { get; set; }
         public DbSet<TaskModel> Tasks { get; set; }
 
+        public DbSet<LemburModel> Lemburs { get; set; }
+        public DbSet<LemburDetailsModel> LemburDetails { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<LemburDetailsModel>().HasKey(p => new { p.LemburId, p.KaryawanId });
+        }
     }
-    
-   
 
 }
+  

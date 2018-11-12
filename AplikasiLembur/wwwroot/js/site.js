@@ -57,7 +57,7 @@ function ValidateForm(formid, urlpost, nameAction) {
                         }
                     }); 
             }
-            e.stopPropagation();
+            return false;
         });
     }
 
@@ -83,11 +83,13 @@ function ShowMessageDialog(type, msg, name, timeout) {
 }
 
 
-    function ShowConfirmationDialog(actionToConfirm, data, message) {
-        $("#confirmationDialog").attr("confirm", actionToConfirm).attr("data", data);
-        $("#confirmationDialog .modal-body").html(message);
-        $("#confirmationDialog").modal('show');
-    }
+function ShowConfirmationDialog(actionToConfirm, data, message, callback) {
+    $("#confirmationDialog").attr("confirm", actionToConfirm).attr("data", data);
+    $("#confirmationDialog .modal-body").html(message);
+    $("#confirmationDialog").modal('show');
+
+
+}
 
 function HideModal() {
     $(".modal").modal('hide');
@@ -99,7 +101,34 @@ function AnimateSubmitButton(selector, animate) {
     } else {
         $(selector).html($(selector).attr("data-name")).prop("disabled", false);
     }
-}  
+} 
+
+function getDayName(day) {
+    switch (day) {
+        case 0:
+            return "Minggu";
+            break;
+        case 1:
+            return "Senin";
+            break;
+        case 2:
+            return "Selasa";
+            break;
+        case 3:
+            return "Rabu";
+            break;
+        case 4:
+            return "Kamis";
+            break;
+        case 5:
+            return "Jumat";
+            break;
+        case 6:
+            return "Sabtu";
+            break;
+    }
+}
+
 
 $(document).ready(function() {
     $("body").tooltip({ selector: '[data-tooltip=show]' });

@@ -57,11 +57,8 @@
     <script>
         ValidateForm("#formLogin", "/login")
 
-        $(document).ready(function () {
-
-            $("#usernameInput").dropdown({
-            on:'hover'});
-
+        $(document).ready(function () {  
+            Cookies.remove("tab_id");
         });
     </script>
 }

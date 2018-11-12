@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AplikasiLembur.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20181029140835_KaryawanTableCascade")]
-    partial class KaryawanTableCascade
+    [Migration("20181107140827_addTaskId")]
+    partial class addTaskId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace AplikasiLembur.Migrations
 
             modelBuilder.Entity("AplikasiLembur.Models.KaryawanModel", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -34,11 +34,73 @@ namespace AplikasiLembur.Migrations
 
                     b.Property<string>("UserId");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("karyawans");
+                    b.ToTable("Karyawans");
+                });
+
+            modelBuilder.Entity("AplikasiLembur.Models.LemburDetailsModel", b =>
+                {
+                    b.Property<int>("LemburId");
+
+                    b.Property<int>("KaryawanId");
+
+                    b.Property<DateTime>("End");
+
+                    b.Property<int>("Plan");
+
+                    b.Property<DateTime>("Start");
+
+                    b.Property<int>("TaskId");
+
+                    b.HasKey("LemburId", "KaryawanId");
+
+                    b.HasIndex("KaryawanId");
+
+                    b.HasIndex("TaskId");
+
+                    b.ToTable("LemburDetails");
+                });
+
+            modelBuilder.Entity("AplikasiLembur.Models.LemburModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedDate");
+
+                    b.Property<string>("Departement");
+
+                    b.Property<string>("Division");
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Lemburs");
+                });
+
+            modelBuilder.Entity("AplikasiLembur.Models.TaskModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Task")
+                        .IsRequired();
+
+                    b.Property<string>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -205,6 +267,38 @@ namespace AplikasiLembur.Migrations
             modelBuilder.Entity("AplikasiLembur.Models.KaryawanModel", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("AplikasiLembur.Models.LemburDetailsModel", b =>
+                {
+                    b.HasOne("AplikasiLembur.Models.KaryawanModel", "Karyawan")
+                        .WithMany()
+                        .HasForeignKey("KaryawanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AplikasiLembur.Models.LemburModel", "Lembur")
+                        .WithMany()
+                        .HasForeignKey("LemburId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("AplikasiLembur.Models.TaskModel", "Task")
+                        .WithMany()
+                        .HasForeignKey("TaskId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AplikasiLembur.Models.LemburModel", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("AplikasiLembur.Models.TaskModel", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
                 });

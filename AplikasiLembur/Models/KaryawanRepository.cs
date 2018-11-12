@@ -30,7 +30,7 @@ namespace AplikasiLembur.Models
 
         public async Task<TResult> DelKaryawanAsync(int id)
         {
-            var karyawan =  await _appDbContext.Karyawans.FirstOrDefaultAsync(p => p.id == id);
+            var karyawan =  await _appDbContext.Karyawans.FirstOrDefaultAsync(p => p.Id == id);
             _appDbContext.Karyawans.Remove(karyawan);
             var saves = await _appDbContext.SaveChangesAsync();
             if (saves>0)
@@ -60,7 +60,7 @@ namespace AplikasiLembur.Models
 
         public async Task<TResult> UpdateKaryawan(KaryawanModel karyawan)
         {
-            var find = await _appDbContext.Karyawans.FirstOrDefaultAsync(p=>p.id == karyawan.id);
+            var find = await _appDbContext.Karyawans.FirstOrDefaultAsync(p=>p.Id == karyawan.Id);
             var nikCount = await _appDbContext.Karyawans.CountAsync(p => p.NIK == karyawan.NIK);
 
             if (find != null && (nikCount==0 || karyawan.NIK == find.NIK ))
