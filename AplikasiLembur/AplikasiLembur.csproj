@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,9 +16,12 @@
     <Compile Remove="Migrations\20181107133342_LemburDetailsUpdate3.Designer.cs" />
     <Compile Remove="Migrations\20181107133855_LemburDetailsUpdate3.cs" />
     <Compile Remove="Migrations\20181107133855_LemburDetailsUpdate3.Designer.cs" />
+    <Compile Remove="Migrations\20181118123421_changeIDLemburtoGUID.cs" />
+    <Compile Remove="Migrations\20181118123421_changeIDLemburtoGUID.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LigerShark.WebOptimizer.Core" Version="1.0.215" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
@@ -29,6 +33,216 @@
     <Content Update="Views\Shared\_LayoutLogin.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\css\demo.css.map" />
+    <None Include="wwwroot\assets\css\main.css.map" />
+    <None Include="wwwroot\assets\scripts\common.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\bootstrap-datepicker.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\js\bootstrap-datepicker.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\js\bootstrap-datepicker.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.ar.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.az.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.bg.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.bs.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.ca.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.cs.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.cy.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.da.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.de.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.el.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.en-AU.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.en-GB.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.eo.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.es.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.et.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.eu.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.fa.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.fi.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.fo.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.fr-CH.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.fr.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.gl.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.he.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.hr.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.hu.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.hy.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.id.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.is.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.it-CH.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.it.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.ja.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.ka.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.kh.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.kk.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.ko.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.kr.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.lt.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.lv.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.me.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.mk.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.mn.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.ms.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.nb.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.nl-BE.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.nl.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.no.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.pl.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.pt-BR.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.pt.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.ro.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.rs-latin.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.rs.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.ru.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.sk.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.sl.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.sq.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.sr-latin.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.sr.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.sv.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.sw.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.th.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.tr.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.uk.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.vi.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.zh-CN.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-datepicker\locales\bootstrap-datepicker.zh-TW.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-markdown\bootstrap-markdown.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-multiselect\bootstrap-multiselect.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-multiselect\bootstrap-multiselect.less" />
+    <None Include="wwwroot\assets\vendor\bootstrap-progressbar\js\bootstrap-progressbar.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-progressbar\js\bootstrap-progressbar.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\assets\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\npm.js" />
+    <None Include="wwwroot\assets\vendor\chartist-plugin-axistitle\chartist-plugin-axistitle.min.js" />
+    <None Include="wwwroot\assets\vendor\chartist-plugin-legend-latest\chartist-plugin-legend.js" />
+    <None Include="wwwroot\assets\vendor\chartist-plugin-tooltip\chartist-plugin-tooltip.min.js" />
+    <None Include="wwwroot\assets\vendor\chartist\js\chartist.js" />
+    <None Include="wwwroot\assets\vendor\chartist\js\chartist.min.js" />
+    <None Include="wwwroot\assets\vendor\chartist\map\chartist.css.map" />
+    <None Include="wwwroot\assets\vendor\chartist\map\chartist.min.js.map" />
+    <None Include="wwwroot\assets\vendor\chartist\scss\chartist.scss" />
+    <None Include="wwwroot\assets\vendor\dropify\fonts\dropify.svg" />
+    <None Include="wwwroot\assets\vendor\dropify\js\dropify.js" />
+    <None Include="wwwroot\assets\vendor\dropify\js\dropify.min.js" />
+    <None Include="wwwroot\assets\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\assets\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\assets\vendor\jquery-slimscroll\jquery.slimscroll.js" />
+    <None Include="wwwroot\assets\vendor\jquery-slimscroll\jquery.slimscroll.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery-sparkline\js\jquery.sparkline.js" />
+    <None Include="wwwroot\assets\vendor\jquery-sparkline\js\jquery.sparkline.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery.maskedinput\jquery.maskedinput.js" />
+    <None Include="wwwroot\assets\vendor\jquery.maskedinput\jquery.maskedinput.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery\core.js" />
+    <None Include="wwwroot\assets\vendor\jquery\jquery.js" />
+    <None Include="wwwroot\assets\vendor\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery\jquery.min.map" />
+    <None Include="wwwroot\assets\vendor\jquery\jquery.slim.js" />
+    <None Include="wwwroot\assets\vendor\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery\jquery.slim.min.map" />
+    <None Include="wwwroot\assets\vendor\linearicons\fonts\Linearicons-Free.svg" />
+    <None Include="wwwroot\assets\vendor\linearicons\fonts\Linearicons-Free.woff2" />
+    <None Include="wwwroot\assets\vendor\markdown\markdown.js" />
+    <None Include="wwwroot\assets\vendor\metisMenu\metisMenu.js" />
+    <None Include="wwwroot\assets\vendor\parsleyjs\js\parsley.js" />
+    <None Include="wwwroot\assets\vendor\parsleyjs\js\parsley.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ar-AR.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ar-AR.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-bg-BG.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-bg-BG.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ca-ES.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ca-ES.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-cs-CZ.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-cs-CZ.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-da-DK.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-da-DK.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-de-DE.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-de-DE.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-el-GR.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-el-GR.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-es-ES.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-es-ES.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-es-EU.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-es-EU.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-fa-IR.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-fa-IR.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-fi-FI.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-fi-FI.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-fr-FR.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-fr-FR.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-gl-ES.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-gl-ES.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-he-IL.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-he-IL.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-hr-HR.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-hr-HR.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-hu-HU.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-hu-HU.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-id-ID.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-id-ID.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-it-IT.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-it-IT.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ja-JP.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ja-JP.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ko-KR.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ko-KR.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-lt-LT.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-lt-LT.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-lt-LV.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-lt-LV.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-mn-MN" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-nb-NO.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-nb-NO.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-nl-NL.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-nl-NL.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-pl-PL.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-pl-PL.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-pt-BR.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-pt-BR.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-pt-PT.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-pt-PT.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ro-RO.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ro-RO.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ru-RU.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ru-RU.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sk-SK.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sk-SK.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sl-SI.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sl-SI.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sr-RS-Latin.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sr-RS-Latin.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sr-RS.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sr-RS.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sv-SE.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-sv-SE.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ta-IN.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-ta-IN.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-th-TH.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-th-TH.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-tr-TR.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-tr-TR.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-uk-UA.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-uk-UA.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-vi-VN.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-vi-VN.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-zh-CN.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-zh-CN.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-zh-TW.js" />
+    <None Include="wwwroot\assets\vendor\summernote\lang\summernote-zh-TW.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\plugin\databasic\summernote-ext-databasic.js" />
+    <None Include="wwwroot\assets\vendor\summernote\plugin\databasic\summernote-ext-databasic.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\plugin\hello\summernote-ext-hello.js" />
+    <None Include="wwwroot\assets\vendor\summernote\plugin\hello\summernote-ext-hello.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\plugin\specialchars\summernote-ext-specialchars.js" />
+    <None Include="wwwroot\assets\vendor\summernote\plugin\specialchars\summernote-ext-specialchars.min.js" />
+    <None Include="wwwroot\assets\vendor\summernote\summernote.js" />
+    <None Include="wwwroot\assets\vendor\summernote\summernote.min.js" />
+    <None Include="wwwroot\assets\vendor\to-markdown\to-markdown.js" />
+    <None Include="wwwroot\assets\vendor\toastr\toastr.js" />
   </ItemGroup>
 
 </Project>

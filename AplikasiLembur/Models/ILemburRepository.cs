@@ -7,8 +7,11 @@ namespace AplikasiLembur.Models
 {
     public interface ILemburRepository
     {
-        Task<TResult> AddLembur(LemburModel lemburModel);
+        Task<TResult> AddLemburAsync(LemburModel lemburModel);
 
-        Task<TResult> GetLastId();
+        Task<bool> CheckIdAsync(LemburModel lemburModel);
+
+        Task<TResult> UpdateLemburAsync(LemburModel lemburModel);
     }
+
 }

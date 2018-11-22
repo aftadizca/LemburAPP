@@ -6,52 +6,80 @@
     <title>@ViewData["Title"] - LOGIN APLIKASI LEMBUR</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-sandstone.css" />
-        <link rel="stylesheet" href="~/css/awesome.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
+        <link rel="stylesheet" href="~/assets/vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="~/assets/vendor/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="~/assets/vendor/linearicons/style.css">
+        <link rel="stylesheet" href="~/assets/vendor/metisMenu/metisMenu.css">
+        <link rel="stylesheet" href="~/assets/vendor/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css">
+        <link rel="stylesheet" href="~/assets/vendor/chartist/css/chartist.min.css">
+        <link rel="stylesheet" href="~/assets/vendor/chartist-plugin-tooltip/chartist-plugin-tooltip.css">
+        <link rel="stylesheet" href="~/assets/vendor/toastr/toastr.min.css">
+        <!-- MAIN CSS -->
+        <link rel="stylesheet" href="~/assets/css/main.css">
+        <!-- GOOGLE FONTS -->
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+        <!-- ICONS -->
+        <link rel="apple-touch-icon" sizes="76x76" href="~/assets/img/apple-icon.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="~/assets/img/favicon.png">
+        @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-sandstone.css" />*@
+                <link rel="stylesheet" href="~/css/awesome.css" />
+                <link rel="stylesheet" href="~/css/site.css" />
+        </environment>
 
-    <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-sandstone.css" />
-        <link rel="stylesheet" href="~/css/awesome.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-</head>
-<body class="bg-light">
+        <environment exclude="Development">
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-sandstone.css" />
+            <link rel="stylesheet" href="~/css/awesome.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+        </environment>
+        </head>
+        <body class="body-hynotize">
 
-    <partial name="_CookieConsentPartial" />
+            <partial name="_CookieConsentPartial" />
 
-    <div class="container body-content mt-5">
+            @*<div class="container body-content mt-5">*@
         @RenderBody()
-    </div>
+        @*</div>*@
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-        <script src="~/js/jquery-ui.js"></script>
-        <script src="~/js/datatables.js"></script>
-        <script src="~/js/velocity.min.js"></script>
-        <script src="~/js/velocity.ui.min.js"></script>
-        <script src="~/js/js.cookie.js"></script>
-        <script src="~/js/alertify.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-        <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-        <script src="~/js/jquery.dataTables.min.js"></script>
-        <script src="~/js/dataTables.bootstrap4.min.js"></script>
-        <script src="~/js/velocity.min.js"></script>
-        <script src="~/js/velocity.ui.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
+        <environment include="Development">
+            @*<script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+            <script src="~/js/jquery-ui.js"></script>
+            <script src="~/js/datatables.js"></script>
+            <script src="~/js/velocity.min.js"></script>
+            <script src="~/js/velocity.ui.min.js"></script>
+            <script src="~/js/js.cookie.js"></script>
+            <script src="~/js/alertify.js"></script>*@
 
-    @RenderSection("Scripts", required: false)
-</body>
+            <script src="~/assets/vendor/jquery/jquery.min.js"></script>
+            <script src="~/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+            <script src="~/assets/vendor/metisMenu/metisMenu.js"></script>
+            <script src="~/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+            <script src="~/assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+            <script src="~/assets/vendor/jquery.maskedinput/jquery.maskedinput.min.js"></script>
+            <script src="~/assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+            <script src="~/js/js.cookie.js"></script>
+            <script src="~/assets/scripts/common.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+            <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+            <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+            <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+            <script src="~/js/jquery.dataTables.min.js"></script>
+            <script src="~/js/dataTables.bootstrap4.min.js"></script>
+            <script src="~/js/velocity.min.js"></script>
+            <script src="~/js/velocity.ui.min.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>
+        </environment>
+
+        @RenderSection("Scripts", required: false)
+        </body>
 </html>

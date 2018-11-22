@@ -12,14 +12,49 @@ namespace AplikasiLembur.Models
         {
             _appDbContext = appDbContext;
         }
-        public Task<TResult> AddLembur(LemburModel lemburModel)
+        public async Task<TResult> AddLemburAsync(LemburModel lemburModel)
         {
-            throw new NotImplementedException();
+            await _appDbContext.Lemburs.AddAsync(lemburModel);
+            await _appDbContext.LemburDetails.AddRangeAsync(lemburModel.LemburDetails);
+            var result = _appDbContext.SaveChanges();
+
+            if (result > 0)
+            {
+                return TResult.Success;
+            }
+            else
+            {
+                return TResult.Fail;
+            } 
         }
 
-        public Task<TResult> GetLastId()
+        public async Task<bool> CheckIdAsync(LemburModel lemburModel)
         {
-            throw new NotImplementedException();
+            var result = await _appDbContext.Lemburs.FindAsync(lemburModel.Id);
+            if (result != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<TResult> UpdateLemburAsync(LemburModel lemburModel)
+        {
+            _appDbContext.Update(lemburModel);
+            _appDbContext.UpdateRange(lemburModel.LemburDetails);
+
+            var result = await _appDbContext.SaveChangesAsync();
+            if (result > 0)
+            {
+                return TResult.Success;
+            }
+            else
+            {
+                return TResult.Fail;
+            }
         }
     }
 }

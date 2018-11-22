@@ -41,11 +41,12 @@ namespace AplikasiLembur.Migrations
 
             modelBuilder.Entity("AplikasiLembur.Models.LemburDetailsModel", b =>
                 {
-                    b.Property<int>("LemburId");
+                    b.Property<string>("LemburId");
 
                     b.Property<int>("KaryawanId");
 
-                    b.Property<string>("Task");
+                    b.Property<string>("Task")
+                        .IsRequired();
 
                     b.HasKey("LemburId", "KaryawanId");
 
@@ -56,9 +57,7 @@ namespace AplikasiLembur.Migrations
 
             modelBuilder.Entity("AplikasiLembur.Models.LemburModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id");
 
                     b.Property<DateTime>("CreatedDate");
 

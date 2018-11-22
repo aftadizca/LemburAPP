@@ -10,15 +10,15 @@ namespace AplikasiLembur.Models
 {
     public class LemburDetailsModel
     {    
-        public int LemburId { get; set; } 
+        public string LemburId { get; set; } 
 
         public int KaryawanId { get; set; }
 
         [Required]
         public string Task { get; set; }
 
-        public virtual LemburModel Lembur { get; set; }  
+        public LemburModel Lembur { get; set; }  
 
-        public virtual KaryawanModel Karyawan { get; set; }                    
+        public  KaryawanModel Karyawan { get; set; }                    
     }
 }

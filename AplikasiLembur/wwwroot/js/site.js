@@ -1,7 +1,7 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
+// Write your JavaScript code. 
 
 $(".modal").each(function (l) { $(this).on("show.bs.modal", function (l) { var o = $(this).attr("data-easein"); "shake" == o ? $(".modal-dialog").velocity("callout." + o) : "pulse" == o ? $(".modal-dialog").velocity("callout." + o) : "tada" == o ? $(".modal-dialog").velocity("callout." + o) : "flash" == o ? $(".modal-dialog").velocity("callout." + o) : "bounce" == o ? $(".modal-dialog").velocity("callout." + o) : "swing" == o ? $(".modal-dialog").velocity("callout." + o) : $(".modal-dialog").velocity("transition." + o) }) });
 
@@ -10,6 +10,7 @@ function ValidateForm(formid, urlpost, nameAction) {
         $(formid).on("submit", function (e) {
 
             e.preventDefault();
+            console.log("tetete");
 
             if ($(formid + " input.form-control.valid").length === $(formid +" input.form-control").length) {
 
@@ -82,13 +83,16 @@ function ShowMessageDialog(type, msg, name, timeout) {
     }
 }
 
+var okButton = $("#confirmationDialog #okButton");
+var confirmDialog = $("#confirmationDialog");
 
 function ShowConfirmationDialog(actionToConfirm, data, message, callback) {
     $("#confirmationDialog").attr("confirm", actionToConfirm).attr("data", data);
     $("#confirmationDialog .modal-body").html(message);
     $("#confirmationDialog").modal('show');
-
-
+    if (typeof callback !== 'undefined') {
+        callback();
+    }
 }
 
 function HideModal() {
@@ -99,7 +103,7 @@ function AnimateSubmitButton(selector, animate) {
     if (animate === true) {
         $(selector).html("<img src='/images/wait2.svg' style ='align: center' height='24px' width='" + $(selector).width() + "'>").prop("disabled", true);
     } else {
-        $(selector).html($(selector).attr("data-name")).prop("disabled", false);
+        $(selector).html($(selector).attr("data-name").toUpperCase()).prop("disabled", false);
     }
 } 
 

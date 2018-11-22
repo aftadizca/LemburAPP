@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,7 +10,9 @@ namespace AplikasiLembur.Models
 {
     public class LemburModel
     {
-        public int Id { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string Id { get; set; } = Guid.NewGuid().ToString();                                
 
         [Required]
         public string Departement { get; set; }
@@ -33,9 +36,9 @@ namespace AplikasiLembur.Models
         
 
         public string UserId { get; set; } 
-        public virtual IdentityUser User { get; set; }
+        public IdentityUser User { get; set; }
 
-        public List<LemburDetailsModel> LemburDetails { get; set; }
+        public List<LemburDetailsModel> LemburDetails { get; set; } = new List<LemburDetailsModel>();
 
     }
 }

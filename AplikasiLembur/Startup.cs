@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AplikasiLembur.Models;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 
 namespace AplikasiLembur
 {
@@ -64,7 +66,9 @@ namespace AplikasiLembur
             services.AddTransient<IKaryawanRepository, KaryawanRepository>();
             services.AddTransient<ITaskRepository, TaskRepository>();
             services.AddTransient<ILemburRepository, LemburRepository>();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddWebOptimizer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,7 +76,7 @@ namespace AplikasiLembur
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage(); 
             }
             else
             {
@@ -80,6 +84,7 @@ namespace AplikasiLembur
                 app.UseHsts();
             }
 
+            app.UseWebOptimizer();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

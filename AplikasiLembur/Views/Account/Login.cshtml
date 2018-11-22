@@ -6,7 +6,54 @@
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
 }
 
-<div class="row">
+<div id="wrapper">
+    <div class="vertical-align-wrap py-0">
+        <div class="vertical-align-middle py-0">
+            <div class="auth-box">
+                <div class="content">
+                    <div class="header">
+                        <div class="logo text-center"><img src="data:image/png;base64,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" alt="DiffDash"></div>
+                        <p class="lead">Login to LEMBUR Dashboard</p>
+                    </div>
+
+                    <form asp-action="Index" asp-controller="Admin" class="form-auth-small" id="formLogin" method="post">
+
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user-circle fa-lg"></i></span>
+                            <div class="form-group">
+                                <label asp-for="Username" class="control-label sr-only"></label>
+                                <select asp-for="Username" id="inputUsername" class="multiselect multiselect-custom">
+                                    @foreach (var user in UserManager.Users.OrderBy(p => p.UserName))
+                                    {
+                                        <option value="@user.UserName">@user.UserName.ToUpper()</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-key text-white fa-lg"></i></span>
+                            <div class="form-group">
+                                <input asp-for="Password" class="form-control" placeholder="PASSWORD" id="inputPassword">
+                            </div>
+                        </div>
+                        <span asp-validation-for="Password" id="fieldPass" class="text-danger"></span>
+
+                        <button id="submitLogin" type="submit" data-name="login" class="btn btn-primary btn-lg btn-block">LOGIN</button>
+                        <div class="bottom">
+                            <span class="helper-text"><i class="fa fa-lock"></i> <a href="page-forgot-password.html">Forgot password?</a></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*<div class="row">
     <div class="col"></div>
     <div class="col-lg-5 col-md-5">
         <div class="card mt-5 login">
@@ -50,12 +97,61 @@
         </div>
     </div>
     <div class="col"></div>
-</div>
+</div>*@
 
 @section Scripts
     {
     <script>
         ValidateForm("#formLogin", "/login")
+
+        $(function () {
+
+            // Masked Inputs
+            $('#phone').mask('(999) 999-9999');
+            $('#phone-ex').mask('(999) 999-9999? x99999');
+            $('#tax-id').mask('99-9999999');
+            $('#ssn').mask('999-99-9999');
+            $('#product-key').mask('a*-999-a999');
+
+
+            // Multiselect
+            $('#multiselect1, #multiselect2, #single-selection, #multiselect5, #multiselect6, #inputUsername').multiselect({ 
+                buttonClass: "form-control" 
+            });
+
+            $('#multiselect3-all').multiselect({
+                includeSelectAllOption: true,
+            });
+
+            $('#multiselect4-filter').multiselect({
+                enableFiltering: true,
+                enableCaseInsensitiveFiltering: true,
+                maxHeight: 200
+            });
+
+            $('#multiselect-size').multiselect({
+                buttonClass: 'btn btn-default btn-sm'
+            });
+
+            $('#multiselect-link').multiselect({
+                buttonClass: 'btn btn-link'
+            });
+
+            $('#multiselect-color').multiselect({
+                buttonClass: 'btn btn-primary'
+            });
+
+            $('#multiselect-color2').multiselect({
+                buttonClass: 'btn btn-success'
+            });
+
+
+            // Date picker
+            $('.inline-datepicker').datepicker({
+                todayHighlight: true
+            });
+
+        });
 
         $(document).ready(function () {  
             Cookies.remove("tab_id");
