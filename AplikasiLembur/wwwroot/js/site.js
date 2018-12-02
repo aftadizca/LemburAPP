@@ -9,8 +9,7 @@ function ValidateForm(formid, urlpost, nameAction) {
 
         $(formid).on("submit", function (e) {
 
-            e.preventDefault();
-            console.log("tetete");
+            e.preventDefault(); 
 
             if ($(formid + " input.form-control.valid").length === $(formid +" input.form-control").length) {
 
@@ -22,7 +21,7 @@ function ValidateForm(formid, urlpost, nameAction) {
                     function (data) {
 
                         console.log("incoming data: " + JSON.stringify(data));
-                        AnimateSubmitButton(formid + " button[type='submit']", false);
+                        AnimateSubmitButton(formid + "button[type='submit']", false);
 
                         var name = [];
                         $(formid + " input").map(function () {
@@ -100,6 +99,10 @@ function HideModal() {
 } 
 
 function AnimateSubmitButton(selector, animate) {
+    if (typeof $(selector).attr("data-name") === 'undefined') {
+        return false;
+    }
+
     if (animate === true) {
         $(selector).html("<img src='/images/wait2.svg' style ='align: center' height='24px' width='" + $(selector).width() + "'>").prop("disabled", true);
     } else {
@@ -131,8 +134,7 @@ function getDayName(day) {
             return "Sabtu";
             break;
     }
-}
-
+} 
 
 $(document).ready(function() {
     $("body").tooltip({ selector: '[data-tooltip=show]' });

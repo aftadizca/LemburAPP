@@ -113,6 +113,15 @@ namespace AplikasiLembur.Controllers
             return Json(new { type = "msg", messageType = "error", message = "Something wrong !!" });
         }
 
+        [HttpPost]
+        [Route("/home/get/task")]
+        [Authorize]
+        public IActionResult GetTask()
+        { 
+            var result =  _lemburRepository.GetTask();
+            return Json(result);
+        }
+
 
         [HttpPost]
         [Route("/home/edit/employee")]
@@ -181,14 +190,14 @@ namespace AplikasiLembur.Controllers
         [Authorize]
         public IActionResult GetTaskList()
         {
-            return Json(_taskRepository.GetAllTaskByUserId(_userManager.GetUserId(User).ToString()).ToList());
+            return Json(_taskRepository.GetAllTaskByUserId(_userManager.GetUserId(User)).ToList());
         }
 
         [HttpPost]
         [Route("/home/save/lembur")]
         [Authorize]
         public async Task<IActionResult> SaveLemburAsync(string test)
-        {
+        {    
             if (test != null)
             {
                 LemburModel lemburModel = new LemburModel(); 
@@ -206,6 +215,10 @@ namespace AplikasiLembur.Controllers
                     {
                         return Json(new { type = "msg", messageType = "success", title = "SUCCESS", message = "Overtime has been saved!", lemburId = lemburModel.Id });
                     }
+                    else
+                    {
+                        return Json(new { type = "msg", messageType = "error", title = "ERROR", message = "Overtime changes not saved!"});
+                    }
                 }
 
                 foreach (var item in lemburModel.LemburDetails)
@@ -219,6 +232,30 @@ namespace AplikasiLembur.Controllers
                 } 
             } 
             return Json(new { type = "msg", messageType = "error", title = "ERROR", message = "Something Error!" });
+        }
+
+        [HttpPost]
+        [Route("/home/list/lembur")]
+        [Authorize]
+        public IActionResult ListLembur()
+        {
+            return Json(_lemburRepository.GetListLembur(_userManager.GetUserId(User)));
+        }
+
+        [HttpPost]
+        [Route("/home/get/lembur")]
+        [Authorize]
+        public IActionResult GetLembur(string id)
+        {
+            if (id != null)
+            {
+                string getid;
+                byte[] bytes = Convert.FromBase64String(id);
+                getid = (string) JsonConvert.DeserializeObject(Encoding.UTF8.GetString(bytes));
+                var result = _lemburRepository.GetLemburModels(getid);
+                return Json(result);
+            }
+            return Json(new { type = "msg", messageType = "error", title = "ERROR", message = "Something Error!" });  
         }
 
 

@@ -1017,7 +1017,7 @@ var EasyAutocomplete = (function(scope) {
 			function adjustWrapperWidth() {
 				var fieldWidth = $field.outerWidth();
 
-				$field.parent().css("width", fieldWidth);				
+				//$field.parent().css("width", fieldWidth);				
 			}
 
 			function removeWrapper() {
@@ -1184,7 +1184,7 @@ var EasyAutocomplete = (function(scope) {
 
 			function escapeRegExp(str) {
 				return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
- 			}
+			}
 
 			function highlightPhrase(string, phrase) {
 				var escapedPhrase = escapeRegExp(phrase);
@@ -1438,13 +1438,13 @@ var EasyAutocomplete = (function(scope) {
 			function bindKeydown() {
 				$field
 					.on("keydown", function(evt) {
-	        		    evt = evt || window.event;
-	        		    var keyCode = evt.keyCode;
-	        		    if (keyCode === 38) {
-	        		        suppressKeypress = true; 
-	        		        return false;
-	        		    }
-		        	})
+						evt = evt || window.event;
+						var keyCode = evt.keyCode;
+						if (keyCode === 38) {
+							suppressKeypress = true; 
+							return false;
+						}
+					})
 					.keydown(function(event) {
 
 						if (event.keyCode === 13 && selectedElement > -1) {

@@ -12,6 +12,12 @@ namespace AplikasiLembur.Models
         Task<bool> CheckIdAsync(LemburModel lemburModel);
 
         Task<TResult> UpdateLemburAsync(LemburModel lemburModel);
+
+        string[] GetTask();
+
+        object GetListLembur(string userId);
+
+        LemburModel GetLemburModels(string lemburId);
     }
 
 }

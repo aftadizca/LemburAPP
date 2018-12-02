@@ -130,27 +130,27 @@ namespace AplikasiLembur.Controllers
             }
             return Json(new { type = "msg", messageType = "error", message = "Delete user failed!" });
         }
-        
-        //[HttpPost]
-        //[Authorize(Roles = "admin")]
-        //[Route("/account/user")]
-        //public async Task<IActionResult> UserList()
-        //{
-        //    List<UserList> users = new List<UserList>();
-        //    foreach (var user in _userManager.Users)
-        //    {
-        //        if (!await _userManager.IsInRoleAsync(user, "admin"))
-        //        {
-        //            users.Add(new UserList()
-        //            {
-        //                ResetPassword = "<a id='resetPassButton' class='btn btn-outline-primary border-0' href='#' data='" + user.Id + "' data-tooltip='show' data-placement='auto' title='' data-original-title='Reset Password'><i class='fas fa-unlock-alt fa-lg'></i></a>",
-        //                Username = user.NormalizedUserName,
-        //                Delete = "<a id='deleteUserButton' class='btn btn-outline-danger border-0' href='#' data='" + user.Id + "' data-tooltip='show' data-placement='auto' title='' data-original-title='Delete'><i class='fas fa-trash fa-lg'></i></a>"
-        //            });
-        //        } 
-        //    }
-        //    return Json(users);
-        //}
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        [Route("/account/user")]
+        public async Task<IActionResult> UserList()
+        {
+            List<UserList> users = new List<UserList>();
+            foreach (var user in _userManager.Users)
+            {
+                if (!await _userManager.IsInRoleAsync(user, "admin"))
+                {
+                    users.Add(new UserList()
+                    {
+                        ResetPassword = "<a id='resetPassButton' class='btn btn-outline-primary border-0' href='#' data='" + user.Id + "' data-tooltip='show' data-placement='auto' title='' data-original-title='Reset Password'><i class='fas fa-unlock-alt fa-lg'></i></a>",
+                        Username = user.NormalizedUserName,
+                        Delete = "<a id='deleteUserButton' class='btn btn-outline-danger border-0' href='#' data='" + user.Id + "' data-tooltip='show' data-placement='auto' title='' data-original-title='Delete'><i class='fas fa-trash fa-lg'></i></a>"
+                    });
+                }
+            }
+            return Json(users);
+        }
 
         [Authorize(Roles = "admin")]
         [Route("/account/resetpass/{id}")]

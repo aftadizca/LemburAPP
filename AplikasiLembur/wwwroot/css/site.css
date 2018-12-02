@@ -145,12 +145,14 @@ for details on configuring this project to bundle and minify static web assets. 
     margin-bottom: 0px;
 }
 
-    #formLogin .btn-group button {
-        text-align: left;
-        width: 100% !important;
-        display: block;
-        margin: 0px;
-    }
+#formLogin .btn-group button {
+    text-align: left;
+    width: 100% !important;
+    display: block;
+    margin: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
 
     #formLogin .btn-group button .caret {
         position:absolute;
@@ -158,6 +160,11 @@ for details on configuring this project to bundle and minify static web assets. 
         top: 45%;
         vertical-align: middle;
     }
+
+
+table.dataTable tbody tr.selected, table.dataTable tbody th.selected, table.dataTable tbody td.selected .eac-item {
+    color: black;
+}
 
 .user-setting {
     font-size: 150%;

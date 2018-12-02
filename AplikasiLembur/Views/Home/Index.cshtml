@@ -1,13 +1,10 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using System.Globalization
-@using Newtonsoft.Json
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
     ViewBag.HomeActive = "active";
 }
+@using Microsoft.AspNetCore.Identity
 @model AplikasiLembur.ViewModels.HomeViewModel
-@inject UserManager<IdentityUser> UserManager  
-
+@inject UserManager<IdentityUser> UserManager
 @* Dialog Edit Karyawan *@
 <div class="modal" id="editKaryawanDialog" data-easein="bounceDownIn" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog " role="document">
@@ -158,12 +155,12 @@
                 </button>
             </div>
 
-            <form asp-controller="Account" asp-action="ChangePassword" id="changePass" method="post">
+            <form asp-action="ChangePassword" asp-controller="Account" id="changePass" method="post">
                 <div class="modal-body">
 
                     <div class="form-group">
                         <label asp-for="changePasswordModel.OldPassword" class="badge badge-primary"></label>
-                        <input asp-for="changePasswordModel.OldPassword" type="password" class="form-control sandstone" placeholder="Current Password" autofocus">
+                        <input asp-for="changePasswordModel.OldPassword" type="password" class="form-control sandstone" placeholder="Current Password" autofocus>
                         <span asp-validation-for="changePasswordModel.OldPassword" id="" class=""></span>
                     </div>
                     <div class="form-group">
@@ -186,15 +183,37 @@
     </div>
 </div>
 
+@* Dialog Open Lembur *@
+<div class="modal" id="listLemburDialog" data-easein="bounceDownIn" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary-blue text-white">
+                <h5 class="modal-title sandstone text-normal">LIST LEBUR</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="listLemburTable" class="table table-hover table-striped table-bordered table-primary table-sm" width="100%">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">DATE</th>
+                        <th scope="col">PLAN</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="acDepartemen" data-departemens='["Produksi","Teknik","QAQC"]'></div>
 
 
-
-
-
-
-<div class="body-content">
+<div class="body-content" style="margin-top: 60px;">
     <div class="row mt-3">
         <div class="col-sm-3">
 
@@ -217,7 +236,9 @@
                         <div class="card-header">EMPLOYEE</div>
                         <div class="card-body">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary border-0" data-toggle="modal" data-target="#addKaryawanDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add Employee"><i class="fas fa-user-plus"></i></button>
+                                <button type="button" class="btn btn-primary border-0" data-toggle="modal" data-target="#addKaryawanDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add Employee">
+                                    <i class="fa fa-user-plus"></i>
+                                </button>
                             </div>
                             <hr />
                             <table id="karyawanTable" class="table table-hover table-striped table-primary table-sm table-bordered" width="100%">
@@ -239,15 +260,21 @@
                         <div class="card-header">EMPLOYEE</div>
                         <div class="card-body">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add task" id="addTask"><i class="fas fa-plus"></i></button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="edit task" id="editTask" disabled><i class="fas fa-edit"></i></button>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-tooltip="show" data-placement="auto" title="" data-original-title="delete task" id="deleteTask" disabled><i class="fas fa-trash"></i></button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="Add task" id="addTask">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTaskDialog" data-tooltip="show" data-placement="auto" title="" data-original-title="edit task" id="editTask" disabled>
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-tooltip="show" data-placement="auto" title="" data-original-title="delete task" id="deleteTask" disabled>
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </div>
                             <hr />
                             <table id="taskTable" class="table table-hover table-striped table-primary" width="100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="width:1%"></th>
+                                        <th scope="col" style="width: 1%"></th>
                                         <th scope="col">TASK</th>
                                     </tr>
                                 </thead>
@@ -262,16 +289,16 @@
                         <div class="card-header bg-primary text-white">OVERTIME</div>
                         <div class="card-body">
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary">NEW</button>
-                                <button type="button" class="btn btn-primary">OPEN</button>
+                                <button type="button" id="newLembur" class="btn btn-primary">NEW</button>
+                                <button type="button" id="openLembur" class="btn btn-primary">OPEN</button>
                             </div>
                             <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="submit" id="saveLembur" form="formLembur" class="btn btn-primary">SAVE</button>
+                                <button type="submit" id="saveLembur" form="formLembur" class="btn btn-primary" disabled>SAVE</button>
                             </div>
                         </div>
 
                         <div class="card-body">
-                            
+
                             <form action="/" method="post" id="formLembur" data-editable="true">
                                 <div class="row">
                                     <div class="col">
@@ -328,7 +355,9 @@
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <input class="form-control" asp-for="lemburModel.Plan" />
-                                                    <div class="input-group-append"><span class="input-group-text">JAM</span></div>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">JAM</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <span asp-validation-for="lemburModel.Plan" class="text-danger"></span>
@@ -340,7 +369,9 @@
                                         <table id="karyawanTable2" class="table table-hover table-striped table-bordered table-primary table-sm" width="100%">
                                             <thead class="thead-dark">
                                                 <tr>
-                                                    <th class="text-center check-all" scope="col"><i class="far fa-circle fa-lg table-check"></i></th>
+                                                    <th class="text-center check-all" scope="col">
+                                                        <i class="far fa-circle fa-lg table-check"></i>
+                                                    </th>
                                                     <th scope="col">NIK</th>
                                                     <th scope="col">NAME</th>
                                                     <th scope="col">TASK</th>
@@ -364,15 +395,15 @@
 </div>
 
 
-
 @section Scripts
     {
     <script>
         "use strict";
-        $(document).ready(function () { 
-            $(window).on("beforeunload", function (e) {
-                return e.originalEvent.returnValue = "Your message here";
-            });
+        $(document).ready(function($) {
+            $(window).on("beforeunload",
+                function(e) {
+                    return e.originalEvent.returnValue = "Your message here";
+                });
 
             ValidateForm("#changePass", "/account/cp");
             ValidateForm("#addKaryawanForm", "/home/add/employee", "addEmployee");
@@ -380,7 +411,9 @@
             ValidateForm("#addTaskForm", "/home/add/task", "addTask");
             ValidateForm("#editTaskForm", "/home/edit/task", "editTask");
 
-            // #region TABLE KARYAWAN IN LEMBUR FORM
+            var formL;
+
+            //#region TABLE KARYAWAN IN LEMBUR FORM
             var karyawanTable2 = $("#karyawanTable2").DataTable({
                 ajax: {
                     type: 'POST',
@@ -393,10 +426,12 @@
                 "paging": false,
                 "info": false,
                 responsive: true,
-                columnDefs: [{
-                    targets: 0,
-                    className: "text-center"
-                }],
+                columnDefs: [
+                    {
+                        targets: 0,
+                        className: "text-center"
+                    }
+                ],
                 "columns": [
                     {
                         "data": null,
@@ -410,114 +445,160 @@
                     { "data": "namaKaryawan" },
                     {
                         "data": "id",
-                        render: function (data) {
-                            return '<input class="form-control form-control-sm task" data-id="'+data+'" type="text" value="" readonly/>';
+                        render: function(data) {
+                            return '<input class="form-control form-control-sm task" data-id="' +
+                                data +
+                                '" type="text" value="" readonly/>';
                         },
                         orderable: false
                     }
                 ]
             });
             //Check All on Click
-            $("#karyawanTable2_wrapper th.check-all").on("click", function () {
-                if ($("#formLembur").attr("data-editable") === "false") {
-                    return false;
-                }
-                if ($(this).find("i").hasClass("selected")) { 
-                    $("#karyawanTable2_wrapper i").removeClass("selected").switchClass("fa-dot-circle","fa-circle");
-                    $("#karyawanTable2_wrapper tr").removeClass("selected");
-                    $("#karyawanTable2_wrapper input").prop("readonly", true);
-                } else { 
-                    $("#karyawanTable2_wrapper i").addClass("selected").switchClass("fa-circle", "fa-dot-circle");
-                    $("#karyawanTable2_wrapper tr").addClass("selected");
-                    $("#karyawanTable2_wrapper input").prop("readonly", false);
-                }
-                
-            });
-            //Select unselect row table
-            $("body").on("click", "#karyawanTable2_wrapper tbody tr", function () {
-                if ($("#formLembur").attr("data-editable") === "false") {
-                    return false;
-                }
-                $(this).toggleClass("selected");
-                $(this).find("i").toggleClass("selected").toggleClass("fa-circle fa-dot-circle");
-                $(this).find("input").prop("readonly", function (i, v) { return !v; });
-            });
-            //disable row select when input clicked
-            $("body").on("click", "#karyawanTable2_wrapper tbody input, #karyawanTable2_wrapper tbody input[readonly]", function (e) {
-                //return false;
-                e.preventDefault();
-                e.stopPropagation();
-            });
-            // #endregion
-
-            //#region LEMBUR FORM PROCESS 
-            //Saving Lembur
-            $("#formLembur").on("submit",function (e) { 
-                e.preventDefault();
-                //cek if form has valid value
-                if ($("#formLembur .input-validation-error").length > 0) {
-                    return false;
-                }
-
-                var inputTableKaryawan = karyawanTable2.$(".task:not([readonly])");
-                var lemburId = typeof Cookies.get("LemburId") !== "undefined" ? Cookies.get("LemburId") : "";
-                var lemburDetails = [];
-                    inputTableKaryawan.each(function () {
-                    lemburDetails.push({ LemburId: lemburId, KaryawanId: $(this).attr("data-id"), Task: $(this).val() });
-                });
-
-                //susun data
-                var formL = {
-                    "Id": lemburId,
-                    "Departement": $("#lemburModel_Departement").val(),
-                    "Division": $("#lemburModel_Division").val(),
-                    "Employee": $("#lemburModel_Employee").val(),
-                    "CreatedDate": $("#lemburModel_CreatedDate").val(),
-                    "Start": $("#lemburModel_Start").val(),
-                    "End": $("#lemburModel_End").val(),
-                    "Plan": $("#lemburModel_Plan").val(),
-                    "UserId": "@UserManager.GetUserId(User)",
-                    "LemburDetails": lemburDetails
+            $("#karyawanTable2_wrapper th.check-all").on("click",
+                function() {
+                    if ($("#formLembur").attr("data-editable") === "false") {
+                        return false;
+                    }
+                    if ($(this).find("i").hasClass("selected")) {
+                        $("#karyawanTable2_wrapper i").removeClass("selected")
+                            .switchClass("fa-dot-circle", "fa-circle");
+                        $("#karyawanTable2_wrapper tr").removeClass("selected");
+                        $("#karyawanTable2_wrapper input").prop("readonly", true);
+                    } else {
+                        $("#karyawanTable2_wrapper i").addClass("selected").switchClass("fa-circle", "fa-dot-circle");
+                        $("#karyawanTable2_wrapper tr").addClass("selected");
+                        $("#karyawanTable2_wrapper input").prop("readonly", false);
                     }
 
-                    console.log("Sending data : "+JSON.stringify(formL));
+                });
+            //Select unselect row table
+            $("body").on("click",
+                "#karyawanTable2_wrapper tbody tr",
+                function() {
+                    if ($("#formLembur").attr("data-editable") === "false") {
+                        return false;
+                    }
+                    $(this).toggleClass("selected");
+                    $(this).find("i").toggleClass("selected").toggleClass("fa-circle fa-dot-circle");
+                    $(this).find("input").prop("readonly", function(i, v) { return !v; }).trigger("change");
 
-                var fdata = new FormData();
-                fdata.append("test", $.base64.encode(JSON.stringify(formL)));
-                $.ajax({
-                    url: "@Url.Action("SaveLemburAsync")",
-                    method: "POST",
-                    data: fdata,
-                    processData: false,
-                    contentType: false,
-                     success: function (data) {  
-                        console.log("respons : " + data);
-                        switch (data["messageType"]) {
+                });
+            //disable row select when input clicked
+            $("body").on("click",
+                "#karyawanTable2_wrapper tbody input, #karyawanTable2_wrapper tbody input[readonly], .easy-autocomplete-container li",
+                function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                });
+            //#endregion
+
+            //#region Load Data Lembur to FORM LEMBUR
+            if (typeof Cookies.get("LemburData") !== 'undefined') {
+                var LemburData = JSON.parse($.base64.decode(Cookies.get("LemburData")));
+                $("#lemburModel_Departement").val(LemburData.departement);
+                $("#lemburModel_Division").val(LemburData.division);
+                $("#lemburModel_Employee").val(LemburData.employee);
+                $("#lemburModel_CreatedDate").val(LemburData.createdDate);
+                $("#lemburModel_Start").val(LemburData.start);
+                $("#lemburModel_End").val(LemburData.end);
+                $("#lemburModel_Plan").val(LemburData.plan);
+
+                console.log("Load data lembur from cookies");
+            }
+            karyawanTable2.on("draw",
+                function() {
+                    console.log("Table karyawan 2 drawed");
+                    if (typeof Cookies.get("LemburData") !== 'undefined') {
+                        for (var i in LemburData.lemburDetails) {
+                            karyawanTable2.$(".task[data-id*='" + LemburData.lemburDetails[i].karyawanId + "']")
+                                .val(LemburData.lemburDetails[i].task).parents("tr").trigger("click");
+                        }
+                    }
+
+                });
+            //#endregion
+
+            //#region Comparing form change
+            $("body").on("change",
+                "#formLembur input",
+                function() {
+                    var inputTableKaryawan = karyawanTable2.$(".task:not([readonly])");
+                    var lemburId = typeof Cookies.get("LemburId") !== "undefined" ? Cookies.get("LemburId") : "";
+                    var lemburDetails = [];
+                    inputTableKaryawan.each(function() {
+                        lemburDetails.push({
+                            lemburId: lemburId,
+                            karyawanId: $(this).attr("data-id"),
+                            task: $(this).val()
+                        });
+                    });
+                    formL = {
+                        "id": lemburId,
+                        "departement": $("#lemburModel_Departement").val(),
+                        "division": $("#lemburModel_Division").val(),
+                        "employee": $("#lemburModel_Employee").val(),
+                        "start": $("#lemburModel_Start").val(),
+                        "end": $("#lemburModel_End").val(),
+                        "plan": $("#lemburModel_Plan").val(),
+                        "createdDate": $("#lemburModel_CreatedDate").val(),
+                        "userId": "@UserManager.GetUserId(User)",
+                        "lemburDetails": lemburDetails
+                    };
+                    console.log(JSON.stringify(formL));
+                    $("#saveLembur").prop("disabled", false);
+                });
+            //#endregion
+
+
+            //#region LEMBUR FORM PROCESS
+            $("#formLembur").on("submit",
+                function(e) {
+                    e.preventDefault();
+                    //cek if form has valid value
+                    if ($("#formLembur .input-validation-error").length > 0) {
+                        return false;
+                    }
+                    console.log("Sending data lembur : " + JSON.stringify(formL));
+                    var fdata = new FormData();
+                    fdata.append("test", $.base64.encode(JSON.stringify(formL)));
+
+                    $.ajax({
+                        url: "@Url.Action("SaveLemburAsync")",
+                        method: "POST",
+                        data: fdata,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            console.log("respons : " + data);
+                            switch (data["messageType"]) {
                             case "success":
                                 swal({
-                                    title: data["title"],
-                                    text: data["message"],
-                                    icon: data["messageType"]
+                                    title: data.title,
+                                    text: data.message,
+                                    icon: data.messageType
                                 });
-                                Cookies.set("LemburId", data["lemburId"]);
-                                Cookies.set("LemburData", $.base64.encode(JSON.stringify(formL)));
+                                Cookies.set("LemburId", data["lemburId"], { secure: true });
+                                Cookies.set("LemburData", $.base64.encode(JSON.stringify(formL)), { secure: true });
+                                $("#saveLembur").prop("disabled", true);
                                 break;
-                            case "error" :
+                            case "error":
                                 swal({
-                                    title: data["title"],
-                                    text: data["message"],
-                                    icon: data["messageType"]
+                                    title: data.title,
+                                    text: data.message,
+                                    icon: data.messageType
                                 });
                                 break;
-                        } 
-                    }
+                            }
+                        }
+                    });
+
+                    return false;
                 });
-                  
-            });
 
-        //#endregion
+            //#endregion
 
-            //#region TABLE TASK PROCESSING
+            //#region TABLE TASK
             //Load table Task
             var taskTables = $("#taskTable").DataTable({
                 ajax: {
@@ -525,8 +606,7 @@
                     url: '/home/list/task',
                     dataSrc: 'result'
                 },
-                order: []
-                ,
+                order: [],
                 columns: [
                     {
                         defaultContent: '<i class="fa fa-check fa-2x table-check"></i>',
@@ -541,86 +621,110 @@
                 }
             });
             //selected data
-            var taskData; 
+            var taskData;
             //select event
-            taskTables.on('select', function (e, dt, type, indexes) {
-                taskData = taskTables.rows('.selected').data();
-                $(".dataTable i").removeClass("selected");
-                $(".dataTable .selected i").toggleClass("selected");
-                (taskData.length > 0) ? $("#deleteTask").prop("disabled", false) : $("#deleteTask").prop("disabled", true);
-                (taskData.length === 1) ? $("#editTask").prop("disabled", false) : $("#editTask").prop("disabled", true);
-            });
+            taskTables.on('select',
+                function(e, dt, type, indexes) {
+                    taskData = taskTables.rows('.selected').data();
+                    $(".dataTable i").removeClass("selected");
+                    $(".dataTable .selected i").toggleClass("selected");
+                    (taskData.length > 0)
+                        ? $("#deleteTask").prop("disabled", false)
+                        : $("#deleteTask").prop("disabled", true);
+                    (taskData.length === 1)
+                        ? $("#editTask").prop("disabled", false)
+                        : $("#editTask").prop("disabled", true);
+                });
             //deselect event
-            taskTables.on('deselect', function (e, dt, type, indexes) {
-                taskData = taskTables.rows(['.selected']).data();
-                $(".dataTable i").removeClass("selected");
-                $(".dataTable .selected i").toggleClass("selected");
-                (taskData.length > 0) ? $("#deleteTask").prop("disabled", false) : $("#deleteTask").prop("disabled", true);
-                (taskData.length === 1) ? $("#editTask").prop("disabled", false) : $("#editTask").prop("disabled", true);
-            });
+            taskTables.on('deselect',
+                function(e, dt, type, indexes) {
+                    taskData = taskTables.rows(['.selected']).data();
+                    $(".dataTable i").removeClass("selected");
+                    $(".dataTable .selected i").toggleClass("selected");
+                    (taskData.length > 0)
+                        ? $("#deleteTask").prop("disabled", false)
+                        : $("#deleteTask").prop("disabled", true);
+                    (taskData.length === 1)
+                        ? $("#editTask").prop("disabled", false)
+                        : $("#editTask").prop("disabled", true);
+                });
             //draw event
-            taskTables.on('draw.dt', function () {
-                $("#deleteTask").prop("disabled", true);
-                $("#editTask").prop("disabled", true);
-                console.log("Task Table Drawed!!");
-            });
+            taskTables.on('draw.dt',
+                function() {
+                    $("#deleteTask").prop("disabled", true);
+                    $("#editTask").prop("disabled", true);
+                    console.log("Task Table Drawed!!");
+                });
             //delete button click
-            $("#deleteTask").click(function () {
+            $("#deleteTask").click(function() {
                 ShowConfirmationDialog("deleteTask", "", "Delete task ??");
             });
             //process delete task
-            $("body").on("click", "[confirm='deleteTask'] #okButton", function (e) {
-                var datas = JSON.stringify(taskData.pluck("id").toArray());
-                $.ajax({
-                    url: "/home/delete/task",
-                    method: "POST",
-                    contentType: "application/json",
-                    data: datas,
-                    beforeSend: function () {
+            $("body").on("click",
+                "[confirm='deleteTask'] #okButton",
+                function(e) {
+                    var datas = JSON.stringify(taskData.pluck("id").toArray());
+                    $.ajax({
+                        url: "/home/delete/task",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: datas,
+                        beforeSend: function() {
 
-                    },
-                    success: function (result, status) {
-                        HideModal();
-                        if (status === "success") {
-                            ShowMessageDialog(result["messageType"], result["message"]);
-                            taskTables.ajax.reload();
-                        } else {
-                            ShowMessageDialog("", "ada sesuatu yang salah!");
+                        },
+                        success: function(result, status) {
+                            HideModal();
+                            if (status === "success") {
+                                ShowMessageDialog(result["messageType"], result["message"]);
+                                taskTables.ajax.reload();
+                            } else {
+                                ShowMessageDialog("", "ada sesuatu yang salah!");
+                            }
                         }
+                    });
+                });
+            //Edit Task Load
+            $('#editTaskDialog').on('show.bs.modal',
+                function() {
+                    $('#editTaskModel_Id').val(taskData.pluck('id').toArray());
+                    $('#editTaskModel_Task').val(taskData.pluck('task').toArray());
+                });
+            //Refresh table after add task
+            $("body").on('hidden.bs.modal',
+                "[name = 'addTask']",
+                function() {
+                    taskTables.ajax.reload();
+                    if ($("#modalShowCheckTask").is(":checked")) {
+                        $("#addTaskDialog").modal('show');
                     }
                 });
-            });
-            //Edit Task Load
-            $('#editTaskDialog').on('show.bs.modal', function () {
-                $('#editTaskModel_Id').val(taskData.pluck('id').toArray());
-                $('#editTaskModel_Task').val(taskData.pluck('task').toArray());
-            });
-            //Refresh table after add task
-            $("body").on('hidden.bs.modal', "[name = 'addTask']", function () {
-                taskTables.ajax.reload();
-                if ($("#modalShowCheckTask").is(":checked")) {
-                    $("#addTaskDialog").modal('show');
-                }
-            });
             //Refresh table after edit task
-            $("body").on('hidden.bs.modal', "[name = 'editTask']", function () {
-                taskTables.ajax.reload();
-            });
+            $("body").on('hidden.bs.modal',
+                "[name = 'editTask']",
+                function() {
+                    taskTables.ajax.reload();
+                });
             var taskList;
             var taskList2 = [];
 
-            taskTables.on("draw.dt", function () {
-                $(".acTask").remove();
-                taskList = taskTables.data();
-                if (taskList2.length !== taskList.length) { 
-                    for (var i = 0; i < taskList.length; i++) {
-                        $("body").prepend('<div class="acTask" data-task="' + taskList[i]["task"] +'" data-task-id="'+taskList[i]["id"]+'"></div>');
-                    } 
-                }
-                //console.log(JSON.stringify($(".acTask").attr("data-task")));
-            });
+            taskTables.on("draw.dt",
+                function() {
+                    $(".acTask").remove();
+                    taskList = taskTables.data();
+                    if (taskList2.length !== taskList.length) {
+                        for (var i = 0; i < taskList.length; i++) {
+                            $("body").prepend('<div class="acTask" data-task="' +
+                                taskList[i]["task"] +
+                                '" data-task-id="' +
+                                taskList[i]["id"] +
+                                '"></div>');
+                        }
+                    }
+                    //console.log(JSON.stringify($(".acTask").attr("data-task")));
+                });
             //#endregion
 
+            //#region TABLE KARYAWAN
             //Load table Karyawan
             var tables = $("#karyawanTable").DataTable({
                 ajax: {
@@ -634,38 +738,41 @@
                         "orderable": false,
                         "width": "1%",
                         "data": "nik",
-                        "defaultContent": '<div class="btn-group" role="group" aria-label="Basic example"><button id="edit" type="button" class="btn btn-outline-primary border-0" data-tooltip="show" data-placement="auto" title="" data-original-title="Edit"><i class="fas fa-user-edit"></i></button><button type="button" id="delete" class="btn btn-outline-danger border-0" data-tooltip="show" data-placement="auto" title="" data-original-title="Delete"><i class="fas fa-user-minus"></i></button></div>'
+                        "defaultContent":
+                            '<div class="btn-group" role="group" aria-label="Basic example"><button id="edit" type="button" class="btn btn-outline-primary border-0" data-tooltip="show" data-placement="auto" title="" data-original-title="Edit"><i class="fa fa-user-edit"></i></button><button type="button" id="delete" class="btn btn-outline-danger border-0" data-tooltip="show" data-placement="auto" title="" data-original-title="Delete"><i class="fa fa-user-minus"></i></button></div>'
                     }
                 ],
                 "columns": [
-                    { "data": "nik", width:"10%" },
+                    { "data": "nik", width: "10%" },
                     { "data": "namaKaryawan" },
                     { "data": null }
                 ]
             });
 
             //Action Button in table Karyawan
-            $("#karyawanTable tbody").on("click", "button.btn", function () {
-                var data = tables.row($(this).parents("tr")).data();
+            $("#karyawanTable tbody").on("click",
+                "button.btn",
+                function() {
+                    var data = tables.row($(this).parents("tr")).data();
 
-                if ($(this).is("#edit")) {
-                    $("#editKaryawanDialog #editKaryawanModel_NIK").val(data["nik"]);
-                    $("#editKaryawanDialog #editKaryawanModel_NamaKaryawan").val(data["namaKaryawan"]);
-                    $("#editKaryawanDialog #editKaryawanModel_id").val(data["id"]);
-                    $("#editKaryawanDialog").modal("show");
-                } else {
-                    ShowConfirmationDialog("deleteEmployee", data["id"], "Delete employee ??");
-                }
-            });
+                    if ($(this).is("#edit")) {
+                        $("#editKaryawanDialog #editKaryawanModel_NIK").val(data["nik"]);
+                        $("#editKaryawanDialog #editKaryawanModel_NamaKaryawan").val(data["namaKaryawan"]);
+                        $("#editKaryawanDialog #editKaryawanModel_id").val(data["id"]);
+                        $("#editKaryawanDialog").modal("show");
+                    } else {
+                        ShowConfirmationDialog("deleteEmployee", data["id"], "Delete employee ??");
+                    }
+                });
 
             //Process Delete Employee
             $("body").on("click",
                 "[confirm='deleteEmployee'] #okButton",
-                function (e) {
+                function(e) {
                     e.preventDefault();
                     var getId = $("[confirm='deleteEmployee']").attr("data");
                     $.get("home/delete/employee/" + getId,
-                        function (data, status) {
+                        function(data, status) {
                             HideModal();
                             if (status === "success") {
                                 ShowMessageDialog(data["messageType"], data["message"]);
@@ -677,16 +784,21 @@
                 });
 
             //Refresh table after add karyawan
-            $("body").on('hidden.bs.modal', "#messageDialogInfo[name = 'addEmployee']", function () {
-                tables.ajax.reload();
-                if ($("#modalShowCheckKaryawan").is(":checked")) {
-                    $("#addKaryawanDialog").modal('show');
-                }
-            });
+            $("body").on('hidden.bs.modal',
+                "#messageDialogInfo[name = 'addEmployee']",
+                function() {
+                    tables.ajax.reload();
+                    if ($("#modalShowCheckKaryawan").is(":checked")) {
+                        $("#addKaryawanDialog").modal('show');
+                    }
+                });
             //refresh table after edit karyawan
-            $("body").on('hidden.bs.modal', "#messageDialogInfo[name = 'editEmployee']", function () {
-                tables.ajax.reload();
-            });
+            $("body").on('hidden.bs.modal',
+                "#messageDialogInfo[name = 'editEmployee']",
+                function() {
+                    tables.ajax.reload();
+                });
+            //#endregion
 
             //#region ANIMATION & TAB BEHAVIOUR
             //save opened tab when refresh
@@ -697,20 +809,23 @@
                 $("#leftMenu a:first-of-type").tab("show");
             }
             //refresh column width of table
-            $('#leftMenu a').on('shown.bs.tab', function (e) {
-                Cookies.set('tab_id', e.target.id);
-            });
-            //animasi load tab
-            $('#leftMenu a').on("show.bs.tab", function () {
-                $("#myTabContent>.tab-pane").velocity("slideUp", { duration: 300 });
-                $("#myTabContent " + $(this).attr("href")).velocity("slideDown", {
-                    duration: 500, complete: function () {
-                        $('.dataTable').DataTable().columns.adjust().draw();
-                    }
+            $('#leftMenu a').on('shown.bs.tab',
+                function(e) {
+                    Cookies.set('tab_id', e.target.id);
                 });
-            });
+            //animasi load tab
+            $('#leftMenu a').on("show.bs.tab",
+                function() {
+                    $("#myTabContent>.tab-pane").velocity("slideUp", { duration: 300 });
+                    $("#myTabContent " + $(this).attr("href")).velocity("slideDown",
+                        {
+                            duration: 500,
+                            complete: function() {
+                                $('.dataTable').DataTable().columns.adjust().draw();
+                            }
+                        });
+                });
             //#endregion
-
 
             //#region AUTO COMPLETE
             var acDepartements = JSON.parse($(".acDepartemen").attr("data-departemens"));
@@ -719,23 +834,144 @@
                 data: acDepartements,
                 list: {
                     match: {
-                        enabled:false
+                        enabled: false
                     }
                 }
             });
+            karyawanTable2.on("draw",
+                function() {
+                    karyawanTable2.$(".task").easyAutocomplete({
+                        url: function(prase) {
+                            return "/home/get/task";
+                        },
+                        ajaxSettings: {
+                            dataType: "json",
+                            method: "POST",
+                            data: {
+                                dataType: "json"
+                            }
+                        },
+                        list: {
+                            match: {
+                                enabled: true
+                            }
+                        }
+                    });
+                });
+
             //#endregion
 
-            //get Day
+            //#region get Today Date in Form Lembur
             var date = new Date($("#lemburModel_CreatedDate").val());
             $(".day").val(getDayName(date.getDay()));
-            $("#lemburModel_CreatedDate").on("change", function () {
-                date = new Date($("#lemburModel_CreatedDate").val());
-                $(".day").val(getDayName(date.getDay()));
+            $("#lemburModel_CreatedDate").on("change",
+                function() {
+                    date = new Date($("#lemburModel_CreatedDate").val());
+                    $(".day").val(getDayName(date.getDay()));
+                });
+            //#endregion
+
+            //#region New Lembur Button click
+
+            $("#newLembur").on("click",
+                function() {
+                    swal({
+                        title: "Confirmation",
+                        text: "Are you sure to create new form lembur? ",
+                        dangerMode: true,
+                        icon: "warning",
+                        buttons: ["Cancel", "OK"]
+                    }).then((clearForm) => {
+                        $("#formLembur input[type='text'], #formLembur input[type='number']").val("");
+                        karyawanTable2.$(".task").val("").parents(".selected").trigger("click");
+                        $("th.check-all i").switchClass("fa-dot-circle", "fa-circle").removeClass("selected");
+                        $("#saveLembur").prop("disabled", true);
+                        Cookies.remove("LemburData");
+                        Cookies.remove("LemburId");
+                    });
+                });
+
+            //#endregion
+
+            //#region LOAD LIST LEMBUR
+            var listLemburTable = $("#listLemburTable").DataTable({
+                ajax: {
+                    type: 'POST',
+                    url: '/home/list/lembur',
+                    dataSrc: ''
+                },
+                order: [],
+                "searching": false,
+                "paging": true,
+                "info": true,
+                responsive: true,
+                "columns": [
+                    {
+                        "data": 'date',
+                        render: function(data) {
+                            var date = new Date(data);
+                            return date.toLocaleDateString();
+                        }
+                    },
+                    {
+                        "data": "plan"
+                    },
+                    {
+                        "data": "id",
+                        render: function (data) {                                                                                            
+                            return '<div class="btn-group" role="group" aria-label="Basic example"><button type="button" class="btn btn-link text-primary" id="openListLembur" data-id="' + data + '">Open</button><button type="button" class="btn btn-link text-danger" id="deleteListLembur"  data-id="' + data +'">Delete</button></div>';
+                        },
+                        orderable: false,
+                        width:"5%"
+                    }
+                ]
             });
+            //#endregion
 
+            //#region Lembur List Action
+            $("#openLembur").on("click",
+                function() {
+                    $("#listLemburDialog").modal("show");
+                });
+            $("#listLemburDialog").on("shown.bs.modal",
+                function() {
+                    listLemburTable.columns.adjust().draw();
+                });
+            $("body").on("click", "#openListLembur",
+                function() {
+                    var fdata = new FormData();
+                    fdata.append("id", $.base64.encode(JSON.stringify($(this).attr("data-id"))));
+                    $.ajax({
+                        url: "/home/get/lembur",
+                        method: "POST",
+                        data: fdata,
+                        processData: false,
+                        contentType: false,
+                        success: function(data) {
+                            var dateParse = new Date(Date.parse(data.createdDate));
+                            var startParse = new Date(Date.parse(data.start));
+                            var endParse = new Date(Date.parse(data.end));
+                            data.createdDate = dateParse.getFullYear() +
+                                "-" +
+                                ("0" + (dateParse.getMonth()+1)).slice(-2) +
+                                "-" +
+                                ("0" + dateParse.getDate()).slice(-2);
+                            data.start =
+                                ("0" + startParse.getHours()).slice(-2) +
+                                ":" +
+                                ("0" + startParse.getMinutes()).slice(-2);
+                            data.end = ("0" + endParse.getHours()).slice(-2) +
+                                ":" +
+                                ("0" + endParse.getMinutes()).slice(-2);
+                            Cookies.set('LemburId', data.id, { secure: true });
+                            Cookies.set('LemburData', $.base64.encode(JSON.stringify(data)), { secure: true });
+                            $(".modal").modal("hide");
+                            location.reload();
+                        }
 
-        
-
+                    });
+                });
+            //#endregion
         });
 
     </script>
